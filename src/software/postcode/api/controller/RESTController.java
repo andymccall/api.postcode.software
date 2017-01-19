@@ -8,15 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import software.postcode.api.model.Ping;
 
 @RestController
 @RequestMapping("/")
 public class RESTController {
 
     @RequestMapping(value = "/ping", method = RequestMethod.GET, produces="application/json")
-    public @ResponseBody String ping() {
+    public @ResponseBody Ping ping() {
 
-        return "pong";
+        Ping ping = new Ping();
+
+        return ping;
     }
 
 }
