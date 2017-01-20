@@ -10,6 +10,8 @@ import software.postcode.api.model.AddressRecord;
 import software.postcode.api.model.Ping;
 import software.postcode.api.service.AddressRecordService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/")
 public class RESTController {
@@ -30,14 +32,11 @@ public class RESTController {
     }
 
     @RequestMapping(value = "/postcode/{postcode}", method = RequestMethod.GET, produces="application/json")
-    public @ResponseBody AddressRecord getPostcode(@PathVariable String postcode) {
+    public @ResponseBody List<AddressRecord> getPostcode(@PathVariable String postcode) {
 
-        AddressRecord addressRecord;
-        addressRecord = addressRecordService.getAddressRecord(postcode);
+        List<AddressRecord> addressRecords = addressRecordService.getAddressRecords(postcode);
 
-        System.out.println(addressRecord);
-
-        return addressRecord;
+        return addressRecords;
 
     }
 

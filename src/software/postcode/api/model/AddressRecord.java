@@ -11,13 +11,13 @@ public class AddressRecord {
     private String doubleDependentLocality;
     private String thoroughfareAndDescriptor;
     private String dependentThoroughfareAndDescriptor;
-    private int buildingNumber;
+    private String buildingNumber;
     private String buildingName;
     private String subBuildingName;
     private String POBox;
     private String departmentName;
     private String organisationName;
-    private int UDPRN;
+    private String UDPRN;
     private char postcodeType;
     private char SUOrganisationIndicator;
     private String deliveryPointSuffix;
@@ -71,11 +71,11 @@ public class AddressRecord {
         this.dependentThoroughfareAndDescriptor = dependentThoroughfareAndDescriptor;
     }
 
-    public int getBuildingNumber() {
+    public String getBuildingNumber() {
         return buildingNumber;
     }
 
-    public void setBuildingNumber(int buildingNumber) {
+    public void setBuildingNumber(String buildingNumber) {
         this.buildingNumber = buildingNumber;
     }
 
@@ -117,6 +117,38 @@ public class AddressRecord {
 
     public void setOrganisationName(String organisationName) {
         this.organisationName = organisationName;
+    }
+
+    public String getUDPRN() {
+        return UDPRN;
+    }
+
+    public void setUDPRN(String UDPRN) {
+        this.UDPRN = UDPRN;
+    }
+
+    public char getPostcodeType() {
+        return postcodeType;
+    }
+
+    public void setPostcodeType(char postcodeType) {
+        this.postcodeType = postcodeType;
+    }
+
+    public char getSUOrganisationIndicator() {
+        return SUOrganisationIndicator;
+    }
+
+    public void setSUOrganisationIndicator(char SUOrganisationIndicator) {
+        this.SUOrganisationIndicator = SUOrganisationIndicator;
+    }
+
+    public String getDeliveryPointSuffix() {
+        return deliveryPointSuffix;
+    }
+
+    public void setDeliveryPointSuffix(String deliveryPointSuffix) {
+        this.deliveryPointSuffix = deliveryPointSuffix;
     }
 
     @Override
