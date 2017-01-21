@@ -10,4 +10,6 @@ import java.util.List;
 public interface AddressRecordDAO {
 
     public List<AddressRecord> getAddressRecords(String postcode);
+    public List<AddressRecord> getAddressRecords(String postcode, String buildingNumber);
+
 }

@@ -10,5 +10,6 @@ import java.util.List;
 public interface AddressRecordService {
 
     public List<AddressRecord> getAddressRecords(String postcode);
+    public List<AddressRecord> getAddressRecords(String postcode, String buildingNumber);
 
 }

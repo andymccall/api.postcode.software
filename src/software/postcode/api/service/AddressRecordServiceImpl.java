@@ -31,4 +31,13 @@ public class AddressRecordServiceImpl implements AddressRecordService {
 
     }
 
+    @Override
+    public List<AddressRecord> getAddressRecords(String postcode, String buildingNumber) {
+
+        List<AddressRecord> addressRecords = addressRecordDAO.getAddressRecords(postcode, buildingNumber);
+
+        return addressRecords;
+
+    }
+
 }
