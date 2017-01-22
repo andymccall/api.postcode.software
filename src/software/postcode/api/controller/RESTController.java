@@ -7,8 +7,9 @@ package software.postcode.api.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import software.postcode.api.model.AddressRecord;
-import software.postcode.api.model.JSONResponse;
+import software.postcode.api.model.AddressRecordJsonResponse;
 import software.postcode.api.model.Ping;
+import software.postcode.api.model.PingJsonResponse;
 import software.postcode.api.service.AddressRecordService;
 
 @RestController
@@ -23,42 +24,55 @@ public class RESTController {
     }
 
     @RequestMapping(value = "/ping", method = RequestMethod.GET, produces="application/json")
-    public @ResponseBody Ping ping() {
+    public @ResponseBody
+    PingJsonResponse getPing() {
 
         Ping ping = new Ping();
 
-        return ping;
+        PingJsonResponse pingJsonResponse = new PingJsonResponse();
+        pingJsonResponse.setResult(ping);
+
+        if (pingJsonResponse.getResult() == null) {
+            pingJsonResponse.setStatus(500);
+            pingJsonResponse.setError("Something catastrophic went wrong!");
+        } else {
+            pingJsonResponse.setStatus(200);
+        }
+
+        return (pingJsonResponse);
     }
 
     @RequestMapping(value = "/postcode/{postcode}", method = RequestMethod.GET, produces="application/json")
-    public @ResponseBody JSONResponse getPostcode(@PathVariable String postcode) {
+    public @ResponseBody
+    AddressRecordJsonResponse getPostcode(@PathVariable String postcode) {
 
-        JSONResponse<AddressRecord> jsonResponse = new JSONResponse<>();
+        AddressRecordJsonResponse<AddressRecord> addressRecordJsonResponse = new AddressRecordJsonResponse<>();
 
-        jsonResponse.setResult(addressRecordService.getAddressRecords(postcode));
-        if (jsonResponse.getResult().isEmpty()) {
-            jsonResponse.setStatus(404);
+        addressRecordJsonResponse.setResult(addressRecordService.getAddressRecords(postcode));
+        if (addressRecordJsonResponse.getResult().isEmpty()) {
+            addressRecordJsonResponse.setStatus(404);
         } else {
-            jsonResponse.setStatus(200);
+            addressRecordJsonResponse.setStatus(200);
         }
 
-        return jsonResponse;
+        return addressRecordJsonResponse;
 
     }
 
     @RequestMapping(value = "/postcode/{postcode}/{buildingNumber}", method = RequestMethod.GET, produces="application/json")
-    public @ResponseBody JSONResponse getPostcode(@PathVariable String postcode, @PathVariable String buildingNumber) {
+    public @ResponseBody
+    AddressRecordJsonResponse getPostcode(@PathVariable String postcode, @PathVariable String buildingNumber) {
 
-        JSONResponse<AddressRecord> jsonResponse = new JSONResponse<>();
+        AddressRecordJsonResponse<AddressRecord> addressRecordJsonResponse = new AddressRecordJsonResponse<>();
 
-        jsonResponse.setResult(addressRecordService.getAddressRecords(postcode,buildingNumber));
-        if (jsonResponse.getResult().isEmpty()) {
-            jsonResponse.setStatus(404);
+        addressRecordJsonResponse.setResult(addressRecordService.getAddressRecords(postcode,buildingNumber));
+        if (addressRecordJsonResponse.getResult().isEmpty()) {
+            addressRecordJsonResponse.setStatus(404);
         } else {
-            jsonResponse.setStatus(200);
+            addressRecordJsonResponse.setStatus(200);
         }
 
-        return jsonResponse;
+        return addressRecordJsonResponse;
 
     }
 

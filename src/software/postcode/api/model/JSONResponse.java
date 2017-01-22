@@ -1,14 +1,12 @@
 package software.postcode.api.model;
 
-import java.util.List;
-
 /**
- * Created by andymccall on 20/01/2017.
+ * Created by andymccall on 22/01/2017.
  */
-public class JSONResponse<T> {
+public abstract class JsonResponse {
 
     private int status;
-    private List<T> result;
+    private String error;
 
     public int getStatus() {
         return status;
@@ -18,19 +16,14 @@ public class JSONResponse<T> {
         this.status = status;
     }
 
-    public List<T> getResult() {
-        return result;
+    public String getError() {
+        return error;
     }
 
-    public void setResult(List<T> result) {
-        this.result = result;
+    public void setError(String error) {
+        this.error = error;
     }
 
-    @Override
-    public String toString() {
-        return "JSONResponse{" +
-                "status=" + status +
-                ", result=" + result +
-                '}';
-    }
+    abstract public String toString();
+
 }
