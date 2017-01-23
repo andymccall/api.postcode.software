@@ -48,8 +48,8 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
     @Override
     public List<AddressRecord> getAddressRecords(String postcode){
 
-        String pafFile = "/opt/api.postcode.software/CSV_PAF.csv";
-        //String pafFile = "/Users/andymccall/Downloads/csv_paf/CSV_PAF.csv";
+        //String pafFile = "/opt/api.postcode.software/CSV_PAF.csv";
+        String pafFile = "/Users/andymccall/Downloads/csv_paf/CSV_PAF.csv";
 
         List<AddressRecord> addressList = new ArrayList<AddressRecord>();
 
@@ -73,8 +73,8 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
     @Override
     public List<AddressRecord> getAddressRecords(String postcode, String buildingNumber){
 
-        String pafFile = "/opt/api.postcode.software/CSV_PAF.csv";
-        //String pafFile = "/Users/andymccall/Downloads/csv_paf/CSV_PAF.csv";
+        //String pafFile = "/opt/api.postcode.software/CSV_PAF.csv";
+        String pafFile = "/Users/andymccall/Downloads/csv_paf/CSV_PAF.csv";
 
         List<AddressRecord> addressList = new ArrayList<AddressRecord>();
 
