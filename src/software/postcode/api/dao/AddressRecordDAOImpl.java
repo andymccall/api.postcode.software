@@ -1,6 +1,8 @@
 package software.postcode.api.dao;
 
 import com.opencsv.CSVReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import software.postcode.api.model.AddressRecord;
 
@@ -14,6 +16,9 @@ import java.util.List;
  */
 @Repository("addressRecordDAO")
 public class AddressRecordDAOImpl implements AddressRecordDAO {
+
+    private static final Logger logger =
+            LoggerFactory.getLogger(AddressRecordDAOImpl.class);
 
     private AddressRecord addressPopulator(String[] line) {
 

@@ -1,5 +1,7 @@
 package software.postcode.api.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.postcode.api.dao.AddressRecordDAO;
@@ -12,6 +14,9 @@ import java.util.List;
  */
 @Service("addressRecordService")
 public class AddressRecordServiceImpl implements AddressRecordService {
+
+    private static final Logger logger =
+            LoggerFactory.getLogger(AddressRecordServiceImpl.class);
 
     @Autowired
     private AddressRecordDAO addressRecordDAO;
