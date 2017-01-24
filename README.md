@@ -1,5 +1,8 @@
 # api.postcode.software
 
+### Status
+[![Build Status](https://travis-ci.org/andymccall/api.postcode.software.svg?branch=master)](https://travis-ci.org/andymccall/api.postcode.software)
+
 A demo of this serice can be found at:
 
   http://api.software.com/
