@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  */
 public class PingTest {
 
-    Ping testPing;
+    private Ping testPing;
 
     @Before
     public void setUp() throws Exception {

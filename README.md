@@ -5,8 +5,8 @@
 
 A demo of this serice can be found at:
 
-  http://api.software.com/
-& https://api.software.com/
+  http://api.postcode.software/
+& https://api.postcode.software/
   
  Currently working APIs are:
  

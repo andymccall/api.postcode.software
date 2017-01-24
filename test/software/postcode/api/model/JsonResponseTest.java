@@ -12,15 +12,15 @@ import static org.junit.Assert.*;
 public class JsonResponseTest {
 
     // Constants
-    final public static int test1status = 200;
-    final public static String test1error = "Test error 1!";
+    final private static int test1status = 200;
+    final private static String test1error = "Test error 1!";
 
-    final public static int test2status = 500;
-    final public static String test2error = "Test error 2!";
+    final private static int test2status = 500;
+    final private static String test2error = "Test error 2!";
 
 
-    JsonResponse test1JsonResponse;
-    JsonResponse test2JsonResponse;
+    private JsonResponse test1JsonResponse;
+    private JsonResponse test2JsonResponse;
 
     @Before
     public void setUp() throws Exception {
