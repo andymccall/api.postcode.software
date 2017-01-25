@@ -29,7 +29,8 @@ public class PingTest {
      */
     @Test
     public void getResponse_ResponseIsGot_Passes() throws Exception {
-        Assert.assertEquals("getResponse() has failed","pong", testPing.getResponse());
+        Assert.assertEquals("getResponse() has failed",
+                "pong", testPing.getResponse());
     }
 
     /**
@@ -37,7 +38,8 @@ public class PingTest {
      */
     @Test
     public void toString_StringReturned_Passes() throws Exception {
-        Assert.assertEquals( "toString() has failed", "Ping{response=pong}", testPing.toString());
+        Assert.assertEquals( "toString() has failed",
+                "Ping{response=pong}", testPing.toString());
     }
 
 }
