@@ -14,7 +14,6 @@ import java.util.Random;
  * @version 0.1
  * @since   2017-01-25
  */
-
 public class JsonResponseTest {
 
     // Static test1
