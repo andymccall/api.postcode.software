@@ -32,7 +32,7 @@ public class RESTController {
         logger.debug("Exiting setProductService()");
     }
 
-    @RequestMapping(value = "/ping", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value = "/ping", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
     public @ResponseBody
     PingJsonResponse getPing() {
         logger.debug("Entering getPing()");

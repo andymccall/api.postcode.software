@@ -11,7 +11,6 @@ import org.junit.Test;
  * @version 0.3
  * @since   2017-01-25
  */
-
 public class PingJsonResponseTest {
 
     final private String expectedResponse = "pong";

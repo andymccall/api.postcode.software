@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The AddressRecordJsonResponseTestTest class is a test class
+ * The AddressRecordJsonResponseTest class is a test class
  * that tests AddressRecordJsonResponseTest.
  *
  * @author  Andy McCall
@@ -54,11 +54,17 @@ public class AddressRecordJsonResponseTest {
 
     }
 
+    /**
+     * Tests AddressRecordJsonResponse.getResult() with a known value
+     */
     @Test
     public void getResult() throws Exception {
 
     }
 
+    /**
+     * Tests AddressRecordJsonResponse.setResult() with a known value
+     */
     @Test
     public void setResult() throws Exception {
 
