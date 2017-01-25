@@ -73,7 +73,7 @@ public class JsonResponseTest {
      * Tests JsonResponse.getStatus() with a known value
      */
     @Test
-    public void getStatus() throws Exception {
+    public void getStatus_StatusIsGot_Passes() throws Exception {
         Assert.assertEquals(test1JsonResponse.getStatus(), test1status);
     }
 
@@ -81,7 +81,7 @@ public class JsonResponseTest {
      * Tests JsonResponse.getError() with a known value
      */
     @Test
-    public void getError() throws Exception {
+    public void getError_ErrorIsGot_Passes() throws Exception {
         Assert.assertEquals(test1JsonResponse.getError(), test1error);
     }
 
@@ -89,7 +89,7 @@ public class JsonResponseTest {
      * Tests JsonResponse.setStatus() with a unique value
      */
     @Test
-    public void setStatus() throws Exception {
+    public void setStatus_StatusIsSet_Passes() throws Exception {
         test2JsonResponse.setStatus(test2status);
         Assert.assertEquals(test2JsonResponse.getStatus(), test2status);
     }
