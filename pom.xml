@@ -67,6 +67,17 @@
     </dependencies>
 
     <build>
+             		<!-- SOURCE LOCATIONS -->
+		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>test</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/resource</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
