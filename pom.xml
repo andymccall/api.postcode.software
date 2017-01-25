@@ -125,7 +125,6 @@
             </configuration>
         </execution>
     </executions>
-    </executions>
 </plugin>
             <plugin>
                 <groupId>org.eluder.coveralls</groupId>
