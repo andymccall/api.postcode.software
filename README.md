@@ -3,6 +3,8 @@
 ### Status
 [![Build Status](https://travis-ci.org/andymccall/api.postcode.software.svg?branch=master)](https://travis-ci.org/andymccall/api.postcode.software)
 
+[![Coverage Status](https://coveralls.io/repos/github/andymccall/api.postcode.software/badge.svg?branch=master)](https://coveralls.io/github/andymccall/api.postcode.software?branch=master)
+
 A demo of this serice can be found at:
 
   http://api.postcode.software/
