@@ -94,6 +94,7 @@
                 <goal>prepare-agent</goal>
             </goals>
             <configuration>
+		<destFile>target/jacoco.exec</destFile>
                 <propertyName>surefireArgLine</propertyName>
             </configuration>
         </execution>
