@@ -2,6 +2,6 @@ language: java
 sudo: false
 script: mvn test
 after_success:
-  - mvn clean test jacoco:report coveralls:report
+  - mvn clean jacoco:prepare-agent test jacoco:report
 jdk:
   - oraclejdk8
