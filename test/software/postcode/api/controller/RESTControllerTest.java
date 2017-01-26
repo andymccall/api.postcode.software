@@ -61,6 +61,9 @@ public class RESTControllerTest {
                 this.mappingJackson2HttpMessageConverter);
     }
 
+    private String test1Postcode = "FY0 0LX";
+    private String test2Postcode = "FY0 0LX";
+
     /**
      * Sets up objects and mocks external dependencies needed
      * for the tests.
@@ -83,6 +86,31 @@ public class RESTControllerTest {
                 .andExpect(jsonPath("$.result.response", is("pong")));
     }
 
+    /**
+     * Tests RESTController.getPostcode() with a real postcode
+     */
+    @Test
+    public void Postcode_RealPostcodeIsGot_Passes() throws Exception {
+        mockMvc.perform(get("/postcode/" + test1Postcode))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.status", is(200)));
+    }
+
+    /**
+     * Tests RESTController.getPostcode() with a false postcode
+     */
+    @Test
+    public void Postcode_FalsePostcodeIsNotGot_Passes() throws Exception {
+        mockMvc.perform(get("/postcode/" + test2Postcode))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.status", is(404)));
+    }
+
+    /**
+     * Used to navigate JSON objects
+     */
     protected String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
         this.mappingJackson2HttpMessageConverter.write(

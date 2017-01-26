@@ -54,7 +54,7 @@ public class RESTController {
         return (pingJsonResponse);
     }
 
-    @RequestMapping(value = "/postcode/{postcode}", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value = "/postcode/{postcode}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
     public @ResponseBody
     AddressRecordJsonResponse getPostcode(@PathVariable String postcode) {
         logger.debug("Entering getPostcode()");
@@ -73,7 +73,7 @@ public class RESTController {
 
     }
 
-    @RequestMapping(value = "/postcode/{postcode}/{buildingNumber}", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value = "/postcode/{postcode}/{buildingNumber}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
     public @ResponseBody
     AddressRecordJsonResponse getPostcode(@PathVariable String postcode, @PathVariable String buildingNumber) {
         logger.debug("Entering getPostcode()");
