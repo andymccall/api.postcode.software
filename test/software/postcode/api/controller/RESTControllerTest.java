@@ -134,8 +134,6 @@ public class RESTControllerTest {
                 //.andExpect(jsonPath("$.result.postcode", is(test1Postcode)))
                 .andReturn();
 
-        System.out.println(result.getResponse().getContentAsString());
-
     }
 
     /**
