@@ -172,4 +172,50 @@ public class AddressRecord {
                 ", deliveryPointSuffix='" + deliveryPointSuffix + '\'' +
                 '}';
     }
+
+    /**
+     * Used to populate and AddressRecord
+     */
+    public AddressRecord populateAddressRecord(String[] line) {
+
+        String nullString = null;
+
+        AddressRecord addressRecord = new AddressRecord();
+
+        if (line[0] != null) { addressRecord.setPostcode(line[0]); }
+
+        if (line[1] != null) { addressRecord.setPostTown(line[1]); }
+
+        if (line[2] != null) { addressRecord.setDependantLocality(line[2]); }
+
+        if (line[3] != null) { addressRecord.setDoubleDependentLocality(line[3]); }
+
+        if (line[4] != null) { addressRecord.setThoroughfareAndDescriptor(line[4]); }
+
+        if (line[5] != null) { addressRecord.setDependentThoroughfareAndDescriptor(line[5]); }
+
+        if (line[6] != null) { addressRecord.setBuildingNumber(line[6]); }
+
+        if (line[7] != null) { addressRecord.setBuildingName(line[7]); }
+
+        if (line[8] != null) { addressRecord.setSubBuildingName(line[8]); }
+
+        if (line[9] != null) { addressRecord.setPOBox(line[9]); }
+
+        if (line[10] != null) { addressRecord.setDepartmentName(line[10]); }
+
+        if (line[11] != null) { addressRecord.setOrganisationName(line[11]); }
+
+        if (line[12] != null) { addressRecord.setUDPRN(line[12]); }
+
+        if (line[13] != null) { addressRecord.setPostcodeType(line[13].charAt(0)); }
+
+        if (line[14] != null) { addressRecord.setSUOrganisationIndicator(line[14].charAt(0)); }
+
+        if (line[15] != null) { addressRecord.setDeliveryPointSuffix(line[15]); }
+
+        return addressRecord;
+
+    }
+
 }

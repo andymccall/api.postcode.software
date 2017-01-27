@@ -20,38 +20,13 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
     private static final Logger logger =
             LoggerFactory.getLogger(AddressRecordDAOImpl.class);
 
-    private AddressRecord addressPopulator(String[] line) {
-
-        AddressRecord addressRecord = new AddressRecord();
-
-        addressRecord.setPostcode(line[0]);
-        addressRecord.setPostTown(line[1]);
-        addressRecord.setDependantLocality(line[2]);
-        addressRecord.setDoubleDependentLocality(line[3]);
-        addressRecord.setThoroughfareAndDescriptor(line[4]);
-        addressRecord.setDependentThoroughfareAndDescriptor(line[5]);
-        addressRecord.setBuildingNumber(line[6]);
-        addressRecord.setBuildingName(line[7]);
-        addressRecord.setSubBuildingName(line[8]);
-        addressRecord.setPOBox(line[9]);
-        addressRecord.setDepartmentName(line[10]);
-        addressRecord.setOrganisationName(line[11]);
-        addressRecord.setUDPRN(line[12]);
-        addressRecord.setPostcodeType(line[13].charAt(0));
-        addressRecord.setSUOrganisationIndicator(line[14].charAt(0));
-        addressRecord.setDeliveryPointSuffix(line[15]);
-
-        return addressRecord;
-
-    }
-
     @Override
     public List<AddressRecord> getAddressRecords(String postcode){
 
         String pafFile = "/opt/api.postcode.software/CSV_PAF.csv";
         //String pafFile = "/Users/andymccall/Downloads/csv_paf/CSV_PAF.csv";
 
-        List<AddressRecord> addressList = new ArrayList<AddressRecord>();
+        List<AddressRecord> addressList = new ArrayList<>();
 
         CSVReader reader = null;
         try {
@@ -59,7 +34,8 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
             String[] line;
             while ((line = reader.readNext()) != null) {
                 if (line[0].replaceAll("\\s+","").toLowerCase().equals(postcode.toLowerCase())) {
-                    addressList.add(addressPopulator(line));
+                    AddressRecord addressRecord = new AddressRecord();
+                    addressList.add(addressRecord.populateAddressRecord(line));
                 }
             }
         } catch (IOException e) {
@@ -76,7 +52,7 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
         //String pafFile = "/opt/api.postcode.software/CSV_PAF.csv";
         String pafFile = "/Users/andymccall/Downloads/csv_paf/CSV_PAF.csv";
 
-        List<AddressRecord> addressList = new ArrayList<AddressRecord>();
+        List<AddressRecord> addressList = new ArrayList<>();
 
         CSVReader reader = null;
         try {
@@ -85,7 +61,8 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
             while ((line = reader.readNext()) != null) {
                 if (line[0].replaceAll("\\s+","").toLowerCase().equals(postcode.toLowerCase())) {
                     if (line[6].toLowerCase().equals(buildingNumber.toLowerCase())) {
-                        addressList.add(addressPopulator(line));
+                        AddressRecord addressRecord = new AddressRecord();
+                        addressList.add(addressRecord.populateAddressRecord(line));
                     }
                 }
             }

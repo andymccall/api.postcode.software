@@ -5,23 +5,35 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import software.postcode.api.Application;
 import software.postcode.api.model.AddressRecord;
+import software.postcode.api.service.AddressRecordService;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -40,6 +52,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class RESTControllerTest {
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -50,8 +63,15 @@ public class RESTControllerTest {
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+    @Mock
+    private AddressRecordService mockAddressRecordService;
+
+    @InjectMocks
+    private RESTController restController;
+
+    private String test1Address = "PL1 1AB,PLYMOUTH,,,St. Andrews Cross,,5,,,,,Post Office,18911184,L, ,1A";
+    private final String test1Postcode = "PL11AB";
+    private final String test2Postcode = "FY00LX";
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -72,7 +92,12 @@ public class RESTControllerTest {
     @Before
     public void setUp() throws Exception {
 
-        this.mockMvc = webAppContextSetup(webApplicationContext).build();
+        // this must be called for the @Mock annotations above to be processed
+        // and for the mock service to be injected into the controller under
+        // test.
+        MockitoAnnotations.initMocks(this);
+
+        this.mockMvc = MockMvcBuilders.standaloneSetup(restController).build();
 
     }
 
@@ -87,27 +112,42 @@ public class RESTControllerTest {
                 .andExpect(jsonPath("$.result.response", is("pong")));
     }
 
-//    /**
-//     * Tests RESTController.getPostcode() with a real postcode
-//     */
-//    @Test
-//    public void Postcode_RealPostcodeIsGot_Passes() throws Exception {
-//        mockMvc.perform(get("/postcode/" + test1Postcode))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(contentType))
-//                .andExpect(jsonPath("$.status", is(200)));
-//    }
+    /**
+     * Tests RESTController.getPostcode() with a real postcode
+     */
+    @Test
+    public void Postcode_RealPostcodeIsGot_Passes() throws Exception {
 
-//    /**
-//     * Tests RESTController.getPostcode() with a false postcode
-//     */
-//    @Test
-//    public void Postcode_FalsePostcodeIsNotGot_Passes() throws Exception {
-//        mockMvc.perform(get("/postcode/" + test2Postcode))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(contentType))
-//                .andExpect(jsonPath("$.status", is(404)));
-//    }
+        String[] test1AddressArray = test1Address.split(Pattern.quote(","));
+        AddressRecord test1AddressRecord = new AddressRecord().populateAddressRecord(test1AddressArray);
+        List<AddressRecord> test1AddressList = new ArrayList<>();
+        test1AddressList.add(test1AddressRecord);
+
+        this.mockAddressRecordService = mock(AddressRecordService.class);
+
+        when(this.mockAddressRecordService.getAddressRecords(test1Postcode)).thenReturn(test1AddressList);
+
+        MvcResult result = mockMvc.perform(get("/postcode/" + test1Postcode))
+                //.andExpect(status().isOk())
+                //.andExpect(content().contentType(contentType))
+                //.andExpect(jsonPath("$.status", is(200)))
+                //.andExpect(jsonPath("$.result.postcode", is(test1Postcode)))
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+
+    }
+
+    /**
+     * Tests RESTController.getPostcode() with a false postcode
+     */
+    @Test
+    public void Postcode_FalsePostcodeIsNotGot_Passes() throws Exception {
+        mockMvc.perform(get("/postcode/" + test2Postcode))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.status", is(404)));
+    }
 
     /**
      * Used to navigate JSON objects
@@ -119,32 +159,5 @@ public class RESTControllerTest {
         return mockHttpOutputMessage.getBodyAsString();
     }
 
-//    /**
-//     * Used to populate and AddressRecord
-//     */
-//    private AddressRecord addressPopulator(String[] line) {
-//
-//        AddressRecord addressRecord = new AddressRecord();
-//
-//        addressRecord.setPostcode(line[0]);
-//        addressRecord.setPostTown(line[1]);
-//        addressRecord.setDependantLocality(line[2]);
-//        addressRecord.setDoubleDependentLocality(line[3]);
-//        addressRecord.setThoroughfareAndDescriptor(line[4]);
-//        addressRecord.setDependentThoroughfareAndDescriptor(line[5]);
-//        addressRecord.setBuildingNumber(line[6]);
-//        addressRecord.setBuildingName(line[7]);
-//        addressRecord.setSubBuildingName(line[8]);
-//        addressRecord.setPOBox(line[9]);
-//        addressRecord.setDepartmentName(line[10]);
-//        addressRecord.setOrganisationName(line[11]);
-//        addressRecord.setUDPRN(line[12]);
-//        addressRecord.setPostcodeType(line[13].charAt(0));
-//        addressRecord.setSUOrganisationIndicator(line[14].charAt(0));
-//        addressRecord.setDeliveryPointSuffix(line[15]);
-//
-//        return addressRecord;
-//
-//    }
 
 }
