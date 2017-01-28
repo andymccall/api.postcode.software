@@ -14,10 +14,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.mock.http.MockHttpOutputMessage;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -25,7 +22,6 @@ import software.postcode.api.Application;
 import software.postcode.api.model.AddressRecord;
 import software.postcode.api.service.AddressRecordService;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,8 +63,16 @@ public class RESTControllerTest {
     private String test1Address = "PL1 1AB,PLYMOUTH,,,St. Andrews Cross,,5,,,,,Post Office,18911184,L, ,1A";
     private String test1PostcodeResponse = "PL1 1AB";
     private String test1PostcodeRequest = test1PostcodeResponse.replaceAll("\\s+","");
-    private String test2PostcodeResponse = "FY0 0LX";
+
+
+    private String test2Address = "PL1 1DA,PLYMOUTH,,,Old Town Street,,3,,,,,Warrens Bakery,18911235,S,Y,1Q";
+    private String test2PostcodeResponse = "PL1 1DA";
     private String test2PostcodeRequest = test2PostcodeResponse.replaceAll("\\s+","");
+    private String test2BuildingNumberRequest = "3";
+    private String test2BuildingNumberResponse = test2BuildingNumberRequest;
+
+    private String test3PostcodeResponse = "FY0 0LX";
+    private String test3PostcodeRequest = test3PostcodeResponse.replaceAll("\\s+","");
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -94,13 +98,21 @@ public class RESTControllerTest {
         // test.
         MockitoAnnotations.initMocks(this);
 
-        // Set up the response
+        // Set up the response for test1
         String[] test1AddressArray = test1Address.split(Pattern.quote(","));
         AddressRecord test1AddressRecord = new AddressRecord().populateAddressRecord(test1AddressArray);
         List<AddressRecord> test1AddressList = new ArrayList<>();
         test1AddressList.add(test1AddressRecord);
 
         when(mockAddressRecordService.getAddressRecords(test1PostcodeRequest)).thenReturn(test1AddressList);
+
+        // Set up the response for test2
+        String[] test2AddressArray = test2Address.split(Pattern.quote(","));
+        AddressRecord test2AddressRecord = new AddressRecord().populateAddressRecord(test2AddressArray);
+        List<AddressRecord> test2AddressList = new ArrayList<>();
+        test2AddressList.add(test2AddressRecord);
+
+        when(mockAddressRecordService.getAddressRecords(test2PostcodeRequest,test2BuildingNumberRequest)).thenReturn(test2AddressList);
 
         mockAddressRecordService = mock(AddressRecordService.class);
 
@@ -134,24 +146,30 @@ public class RESTControllerTest {
     }
 
     /**
+     * Tests RESTController.getPostcode() with a real postcode and building number
+     */
+    @Test
+    public void PostcodeAndBuilding_RealPostcodeIsGot_Passes() throws Exception {
+
+        mockMvc.perform(get("/postcode/" + test2PostcodeRequest + "/" + test2BuildingNumberRequest))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.status", is(200)))
+                .andExpect(jsonPath("$.result[0].postcode", is(test2PostcodeResponse)))
+                .andExpect(jsonPath("$.result[0].buildingNumber", is(test2BuildingNumberResponse)));
+
+    }
+
+    /**
      * Tests RESTController.getPostcode() with a false postcode
      */
     @Test
     public void Postcode_FalsePostcodeIsNotGot_Passes() throws Exception {
-        mockMvc.perform(get("/postcode/" + test2PostcodeRequest))
+        mockMvc.perform(get("/postcode/" + test3PostcodeRequest))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.status", is(404)));
     }
 
-    /**
-     * Used to navigate JSON objects
-     */
-    protected String json(Object o) throws IOException {
-        MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-        this.mappingJackson2HttpMessageConverter.write(
-                o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
-        return mockHttpOutputMessage.getBodyAsString();
-    }
 
 }
