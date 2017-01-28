@@ -176,43 +176,41 @@ public class AddressRecord {
     /**
      * Used to populate and AddressRecord
      */
-    public AddressRecord populateAddressRecord(String[] line) {
-
-        String nullString = null;
+    public AddressRecord populateAddressRecord(String[] addressArray) {
 
         AddressRecord addressRecord = new AddressRecord();
 
-        if (line[0] != null) { addressRecord.setPostcode(line[0]); }
+        if (addressArray[0] != null) { addressRecord.setPostcode(addressArray[0]); }
 
-        if (line[1] != null) { addressRecord.setPostTown(line[1]); }
+        if (addressArray[1] != null) { addressRecord.setPostTown(addressArray[1]); }
 
-        if (line[2] != null) { addressRecord.setDependantLocality(line[2]); }
+        if (addressArray[2] != null) { addressRecord.setDependantLocality(addressArray[2]); }
 
-        if (line[3] != null) { addressRecord.setDoubleDependentLocality(line[3]); }
+        if (addressArray[3] != null) { addressRecord.setDoubleDependentLocality(addressArray[3]); }
 
-        if (line[4] != null) { addressRecord.setThoroughfareAndDescriptor(line[4]); }
+        if (addressArray[4] != null) { addressRecord.setThoroughfareAndDescriptor(addressArray[4]); }
 
-        if (line[5] != null) { addressRecord.setDependentThoroughfareAndDescriptor(line[5]); }
+        if (addressArray[5] != null) { addressRecord.setDependentThoroughfareAndDescriptor(addressArray[5]); }
 
-        if (line[6] != null) { addressRecord.setBuildingNumber(line[6]); }
+        if (addressArray[6] != null) { addressRecord.setBuildingNumber(addressArray[6]); }
 
-        if (line[7] != null) { addressRecord.setBuildingName(line[7]); }
+        if (addressArray[7] != null) { addressRecord.setBuildingName(addressArray[7]); }
 
-        if (line[8] != null) { addressRecord.setSubBuildingName(line[8]); }
+        if (addressArray[8] != null) { addressRecord.setSubBuildingName(addressArray[8]); }
 
-        if (line[9] != null) { addressRecord.setPOBox(line[9]); }
+        if (addressArray[9] != null) { addressRecord.setPOBox(addressArray[9]); }
 
-        if (line[10] != null) { addressRecord.setDepartmentName(line[10]); }
+        if (addressArray[10] != null) { addressRecord.setDepartmentName(addressArray[10]); }
 
-        if (line[11] != null) { addressRecord.setOrganisationName(line[11]); }
+        if (addressArray[11] != null) { addressRecord.setOrganisationName(addressArray[11]); }
 
-        if (line[12] != null) { addressRecord.setUDPRN(line[12]); }
+        if (addressArray[12] != null) { addressRecord.setUDPRN(addressArray[12]); }
 
-        if (line[13] != null) { addressRecord.setPostcodeType(line[13].charAt(0)); }
+        if (addressArray[13] != null) { addressRecord.setPostcodeType(addressArray[13].charAt(0)); }
 
-        if (line[14] != null) { addressRecord.setSUOrganisationIndicator(line[14].charAt(0)); }
+        if (addressArray[14] != null) { addressRecord.setSUOrganisationIndicator(addressArray[14].charAt(0)); }
 
-        if (line[15] != null) { addressRecord.setDeliveryPointSuffix(line[15]); }
+        if (addressArray[15] != null) { addressRecord.setDeliveryPointSuffix(addressArray[15]); }
 
         return addressRecord;
 
