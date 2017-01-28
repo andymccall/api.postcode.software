@@ -8,7 +8,6 @@ package software.postcode.api.model;
  * @version 0.1
  * @since   2017-01-23
  */
-
 public abstract class JsonResponse {
 
     private int status;

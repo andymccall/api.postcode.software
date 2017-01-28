@@ -10,7 +10,12 @@ import software.postcode.api.model.AddressRecord;
 import java.util.List;
 
 /**
- * Created by andymccall on 20/01/2017.
+ * The AddressRecordServiceImpl class is a class that implements all the methods
+ * in the AddressRecordService interface.
+ *
+ * @author  Andy McCall
+ * @version 0.1
+ * @since   2017-01-28
  */
 @Service("addressRecordService")
 public class AddressRecordServiceImpl implements AddressRecordService {
@@ -21,12 +26,11 @@ public class AddressRecordServiceImpl implements AddressRecordService {
     @Autowired
     private AddressRecordDAO addressRecordDAO;
 
-    public void setAddressRecordDAO(AddressRecordDAO addressRecordDAO) {
-
-        this.addressRecordDAO = addressRecordDAO;
-
-    }
-
+    /**
+     * Gets the AddressRecords for a postcode.
+     * @param postcode containing postcode to query.
+     * @return List<AddressRecord> List containing AddressRecord objects.
+     */
     @Override
     public List<AddressRecord> getAddressRecords(String postcode) {
 
@@ -36,6 +40,12 @@ public class AddressRecordServiceImpl implements AddressRecordService {
 
     }
 
+    /**
+     * Gets the AddressRecord for a building number at a postcode.
+     * @param postcode containing postcode to query.
+     * @param buildingNumber containing the building number at the postcode to query.
+     * @return List<AddressRecord> List containing AddressRecord objects.
+     */
     @Override
     public List<AddressRecord> getAddressRecords(String postcode, String buildingNumber) {
 
