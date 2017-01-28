@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -20,7 +21,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import software.postcode.api.Application;
 import software.postcode.api.model.AddressRecord;
@@ -60,11 +60,16 @@ public class RESTControllerTest {
 
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
 
+    @InjectMocks
+    private RESTController restController;
+
     @Mock
     private AddressRecordService mockAddressRecordService;
 
-    @InjectMocks
-    private RESTController restController;
+    @Bean
+    AddressRecordService addressRecordService() {
+        return mock(AddressRecordService.class);
+    }
 
     private String test1Address = "PL1 1AB,PLYMOUTH,,,St. Andrews Cross,,5,,,,,Post Office,18911184,L, ,1A";
     private final String test1Postcode = "PL11AB";
@@ -121,15 +126,17 @@ public class RESTControllerTest {
         test1AddressList.add(test1AddressRecord);
 
         this.mockAddressRecordService = mock(AddressRecordService.class);
-
         when(this.mockAddressRecordService.getAddressRecords(test1Postcode)).thenReturn(test1AddressList);
 
-        MvcResult result = mockMvc.perform(get("/postcode/" + test1Postcode))
-                //.andExpect(status().isOk())
-                //.andExpect(content().contentType(contentType))
-                //.andExpect(jsonPath("$.status", is(200)))
-                //.andExpect(jsonPath("$.result.postcode", is(test1Postcode)))
-                .andReturn();
+        // The below works!
+        System.out.println(mockAddressRecordService.getAddressRecords(test1Postcode));
+
+        // This doesn't return the address from the getAddressRecords above ^^
+        mockMvc.perform(get("/postcode/" + test1Postcode))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.status", is(200)))
+                .andExpect(jsonPath("$.result.postcode", is(test1Postcode)));
 
     }
 
