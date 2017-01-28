@@ -7,7 +7,12 @@ import org.junit.Test;
 import java.util.regex.Pattern;
 
 /**
- * Created by andymccall on 28/01/2017.
+ * The AddressRecordTest class is a test class
+ * that tests AddressRecord.
+ *
+ * @author  Andy McCall
+ * @version 0.1
+ * @since   2017-01-28
  */
 public class AddressRecordTest {
 
@@ -18,6 +23,7 @@ public class AddressRecordTest {
     private final String test1OrganisationName = "Post Office";
     private final String test1UDPRN = "18911184";
     private final String test1PostcodeType = "L";
+    private final String test1SUOrganisationIndicator = " ";
     private final String test1DeliveryPointSuffix = "1A";
 
     private final String test1Address = "PL1 1AB,PLYMOUTH,,,St. Andrews Cross,,5,,,,,Post Office,18911184,L, ,1A";
@@ -199,17 +205,18 @@ public class AddressRecordTest {
                 test1PostcodeType, String.valueOf(test1AddressRecord.getPostcodeType()));
     }
 
-//
-//    @Test
-//    public void getSUOrganisationIndicator() throws Exception {
-//
-//    }
-//
-//    @Test
-//    public void setSUOrganisationIndicator() throws Exception {
-//
-//    }
-//
+    @Test
+    public void getSUOrganisationIndicator_SUOrganisationIndicatorIsGot_Passes() throws Exception {
+        Assert.assertEquals("getSUOrganisationIndicator() has failed",
+                test1SUOrganisationIndicator, String.valueOf(referenceAddressRecord.getSUOrganisationIndicator()));
+    }
+
+    @Test
+    public void setSUOrganisationIndicator_SUOrganisationIndicatorIsSet_Passes() throws Exception {
+        test1AddressRecord.setSUOrganisationIndicator(test1SUOrganisationIndicator.charAt(0));
+        Assert.assertEquals("setSUOrganisationIndicator() has failed",
+                test1SUOrganisationIndicator, String.valueOf(test1AddressRecord.getSUOrganisationIndicator()));
+    }
 
     @Test
     public void getDeliveryPointSuffix_DeliveryPointSuffixIsGot_Passes() throws Exception {
