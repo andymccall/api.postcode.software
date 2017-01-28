@@ -73,6 +73,8 @@ public class RESTControllerTest {
 
     private String test3PostcodeResponse = "FY0 0LX";
     private String test3PostcodeRequest = test3PostcodeResponse.replaceAll("\\s+","");
+    private String test3BuildingNumberRequest = "99";
+
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -171,5 +173,17 @@ public class RESTControllerTest {
                 .andExpect(jsonPath("$.status", is(404)));
     }
 
+    /**
+     * Tests RESTController.getPostcode() with a false postcode and building number
+     */
+    @Test
+    public void PostcodeAndBuilding_FalsePostcodeIsNotGot_Passes() throws Exception {
+
+        mockMvc.perform(get("/postcode/" + test3PostcodeRequest + "/" + test3BuildingNumberRequest))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.status", is(404)));
+
+    }
 
 }

@@ -42,11 +42,7 @@ public class RESTController {
         PingJsonResponse pingJsonResponse = new PingJsonResponse();
         pingJsonResponse.setResult(ping);
 
-        if (pingJsonResponse.getResult() == null) {
-            logger.debug("JsonResponse result is null, ping does not exist");
-            pingJsonResponse.setStatus(500);
-            pingJsonResponse.setError("Something catastrophic went wrong!");
-        } else {
+        if (pingJsonResponse.getResult() != null) {
             pingJsonResponse.setStatus(200);
         }
 
