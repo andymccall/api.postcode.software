@@ -74,5 +74,31 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
         return addressList;
     }
 
+    @Override
+    public List<AddressRecord> getAddressRecordsByUDPRN(String UDPRN){
+
+        //String pafFile = "/opt/api.postcode.software/CSV_PAF.csv";
+        String pafFile = "/Users/andymccall/Downloads/csv_paf/CSV_PAF.csv";
+
+        List<AddressRecord> addressList = new ArrayList<>();
+
+        CSVReader reader = null;
+        try {
+            reader = new CSVReader(new FileReader(pafFile));
+            String[] line;
+            while ((line = reader.readNext()) != null) {
+                if (line[12].replaceAll("\\s+","").toLowerCase().equals(UDPRN.toLowerCase())) {
+                        AddressRecord addressRecord = new AddressRecord();
+                        addressList.add(addressRecord.populateAddressRecord(line));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return addressList;
+    }
+
 
 }

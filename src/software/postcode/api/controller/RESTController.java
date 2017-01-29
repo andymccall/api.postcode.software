@@ -1,7 +1,3 @@
-/**
- * Created by andymccall on 19/01/2017.
- */
-
 package software.postcode.api.controller;
 
 import org.slf4j.Logger;
@@ -14,6 +10,14 @@ import software.postcode.api.model.Ping;
 import software.postcode.api.model.PingJsonResponse;
 import software.postcode.api.service.AddressRecordService;
 
+/**
+ * The RESTController is the main controller where all the APIs are
+ * called from.
+ *
+ * @author  Andy McCall
+ * @version 0.1
+ * @since   2017-01-29
+ */
 @RestController
 @RequestMapping("/")
 public class RESTController {
@@ -23,6 +27,9 @@ public class RESTController {
 
     AddressRecordService addressRecordService;
 
+    /**
+     * Sets the AddressRecordService for the controller.
+     */
     @Autowired
     public void setProductService(AddressRecordService addressRecordService) {
         logger.debug("Entering setProductService()");
@@ -32,6 +39,10 @@ public class RESTController {
         logger.debug("Exiting setProductService()");
     }
 
+    /**
+     * Gets the PingJsonResponse for the controller.
+     * @return AddressRecordJsonResponse.
+     */
     @RequestMapping(value = "/ping", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
     public @ResponseBody
     PingJsonResponse getPing() {
@@ -50,6 +61,11 @@ public class RESTController {
         return (pingJsonResponse);
     }
 
+    /**
+     * Gets the AddressRecordJsonResponse for a building by postcode.
+     * @param postcode containing postcode to query.
+     * @return AddressRecordJsonResponse.
+     */
     @RequestMapping(value = "/postcode/{postcode}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
     public @ResponseBody
     AddressRecordJsonResponse getPostcode(@PathVariable String postcode) {
@@ -69,6 +85,13 @@ public class RESTController {
 
     }
 
+    /**
+     * Gets the AddressRecordJsonResponse for a building by postcode filtered by
+     * building number.
+     * @param postcode containing postcode to query.
+     * @param buildingNumber containing building number to filter by.
+     * @return AddressRecordJsonResponse.
+     */
     @RequestMapping(value = "/postcode/{postcode}/{buildingNumber}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
     public @ResponseBody
     AddressRecordJsonResponse getPostcode(@PathVariable String postcode, @PathVariable String buildingNumber) {
@@ -84,6 +107,30 @@ public class RESTController {
         }
 
         logger.debug("Exiting getPostcode()");
+        return addressRecordJsonResponse;
+
+    }
+
+    /**
+     * Gets the AddressRecordJsonResponse for a building by UDPRN.
+     * @param UDPRN containing postcode to query.
+     * @return AddressRecordJsonResponse.
+     */
+    @RequestMapping(value = "/udprn/{UDPRN}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
+    public @ResponseBody
+    AddressRecordJsonResponse getPostcodeByUDPRN(@PathVariable String UDPRN) {
+        logger.debug("Entering getPostcodeByUDPRN()");
+
+        AddressRecordJsonResponse<AddressRecord> addressRecordJsonResponse = new AddressRecordJsonResponse<>();
+
+        addressRecordJsonResponse.setResult(addressRecordService.getAddressRecordsByUDPRN(UDPRN));
+        if (addressRecordJsonResponse.getResult().isEmpty()) {
+            addressRecordJsonResponse.setStatus(404);
+        } else {
+            addressRecordJsonResponse.setStatus(200);
+        }
+
+        logger.debug("Exiting getPostcodeByUDPRN()");
         return addressRecordJsonResponse;
 
     }

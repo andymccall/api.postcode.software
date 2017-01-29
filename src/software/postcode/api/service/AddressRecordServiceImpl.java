@@ -55,4 +55,18 @@ public class AddressRecordServiceImpl implements AddressRecordService {
 
     }
 
+    /**
+     * Gets the AddressRecord for a building by UDPRN.
+     * @param UDPRN containing postcode to query.
+     * @return List<AddressRecord> List containing AddressRecord objects.
+     */
+    @Override
+    public List<AddressRecord> getAddressRecordsByUDPRN(String UDPRN) {
+
+        List<AddressRecord> addressRecords = addressRecordDAO.getAddressRecordsByUDPRN(UDPRN);
+
+        return addressRecords;
+
+    }
+
 }

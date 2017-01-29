@@ -63,7 +63,8 @@ public class RESTControllerTest {
     private String test1Address = "PL1 1AB,PLYMOUTH,,,St. Andrews Cross,,5,,,,,Post Office,18911184,L, ,1A";
     private String test1PostcodeResponse = "PL1 1AB";
     private String test1PostcodeRequest = test1PostcodeResponse.replaceAll("\\s+","");
-
+    private String test1UPDRNRequest = "18911184";
+    private String test1UPDRNResponse = test1UPDRNRequest;
 
     private String test2Address = "PL1 1DA,PLYMOUTH,,,Old Town Street,,3,,,,,Warrens Bakery,18911235,S,Y,1Q";
     private String test2PostcodeResponse = "PL1 1DA";
@@ -73,8 +74,8 @@ public class RESTControllerTest {
 
     private String test3PostcodeResponse = "FY0 0LX";
     private String test3PostcodeRequest = test3PostcodeResponse.replaceAll("\\s+","");
-    private String test3BuildingNumberRequest = "99";
-
+    private String test3BuildingNumberRequest = "00";
+    private String test3UPDRNRequest = "0000000";
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
@@ -107,6 +108,7 @@ public class RESTControllerTest {
         test1AddressList.add(test1AddressRecord);
 
         when(mockAddressRecordService.getAddressRecords(test1PostcodeRequest)).thenReturn(test1AddressList);
+        when(mockAddressRecordService.getAddressRecordsByUDPRN(test1UPDRNRequest)).thenReturn(test1AddressList);
 
         // Set up the response for test2
         String[] test2AddressArray = test2Address.split(Pattern.quote(","));
@@ -184,6 +186,32 @@ public class RESTControllerTest {
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.status", is(404)));
 
+    }
+
+    /**
+     * Tests RESTController.getPostcode() with a real udprn
+     */
+    @Test
+    public void UDPRN_RealPostcodeIsGot_Passes() throws Exception {
+
+        mockMvc.perform(get("/udprn/" + test1UPDRNRequest))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.status", is(200)))
+                .andExpect(jsonPath("$.result[0].udprn", is(test1UPDRNResponse)));
+
+    }
+
+    /**
+     * Tests RESTController.getPostcode() with a false UDPRN
+     */
+    @Test
+    public void UDPRN_FalsePostcodeIsNotGot_Passes() throws Exception {
+
+        mockMvc.perform(get("/udprn/" + test3UPDRNRequest))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.status", is(404)));
     }
 
 }
