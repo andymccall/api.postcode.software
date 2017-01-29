@@ -1,9 +1,9 @@
 # api.postcode.software
 
 ### Status
-[![Build Status](https://travis-ci.org/andymccall/api.postcode.software.svg?branch=master)](https://travis-ci.org/andymccall/api.postcode.software)
+[![Build Status](https://travis-ci.org/andymccall/api.postcode.software.svg?branch=mongodb-itegration)](https://travis-ci.org/andymccall/api.postcode.software)
 
-[![Coverage Status](https://coveralls.io/repos/github/andymccall/api.postcode.software/badge.svg?branch=master)](https://coveralls.io/github/andymccall/api.postcode.software?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/andymccall/api.postcode.software/badge.svg?branch=mongodb-itegration)](https://coveralls.io/github/andymccall/api.postcode.software?branch=mongodb-itegration)
 
 A demo of this serice can be found at:
 
