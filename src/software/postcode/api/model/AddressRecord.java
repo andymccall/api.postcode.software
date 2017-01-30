@@ -1,10 +1,18 @@
 package software.postcode.api.model;
 
+import org.springframework.data.annotation.Id;
+
 /**
- * Created by andymccall on 20/01/2017.
+ * The AddressRecord class is a class that implements the
+ * address.
+ *
+ * @author  Andy McCall
+ * @version 0.1
+ * @since   2017-01-29
  */
 public class AddressRecord {
 
+    private String internalPostcode;
     private String postcode;
     private String postTown;
     private String dependantLocality;
@@ -17,11 +25,13 @@ public class AddressRecord {
     private String POBox;
     private String departmentName;
     private String organisationName;
+    @Id
     private String UDPRN;
     private char postcodeType;
     private char SUOrganisationIndicator;
     private String deliveryPointSuffix;
 
+    public void setInternalPostcode(String internalPostcode) { this.internalPostcode = internalPostcode; }
 
     public String getPostcode() {
         return postcode;
@@ -179,6 +189,8 @@ public class AddressRecord {
     public AddressRecord populateAddressRecord(String[] addressArray) {
 
         AddressRecord addressRecord = new AddressRecord();
+
+        if (addressArray[0] != null) { addressRecord.setInternalPostcode(addressArray[0].replaceAll("\\s+","")); }
 
         if (addressArray[0] != null) { addressRecord.setPostcode(addressArray[0]); }
 

@@ -1,18 +1,24 @@
 package software.postcode.api.dao;
 
-import com.opencsv.CSVReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import software.postcode.api.model.AddressRecord;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by andymccall on 20/01/2017.
+ * The MongoConfiguration class is a class that implements the
+ * AddressRecordDAO to store and retrieve data from the
+ * mongodb.
+ *
+ * @author  Andy McCall
+ * @version 0.1
+ * @since   2017-01-29
  */
 @Repository("addressRecordDAO")
 public class AddressRecordDAOImpl implements AddressRecordDAO {
@@ -20,82 +26,60 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
     private static final Logger logger =
             LoggerFactory.getLogger(AddressRecordDAOImpl.class);
 
+    private MongoOperations mongoOperations;
+    private static final String ADDRESS_RECORD_COLLECTION = "AddressRecord";
+
+    /**
+     * Constructor.
+     * @param mongoOperations containing the MongoOperations
+     *                        variable.
+     */
+    public AddressRecordDAOImpl(MongoOperations mongoOperations){
+        
+        this.mongoOperations=mongoOperations;
+    }
+
+    /**
+     * Gets a list of AddressRecords for a given postcode.
+     * @param postcode containing postcode to search for
+     */
     @Override
     public List<AddressRecord> getAddressRecords(String postcode){
 
-        //String pafFile = "/opt/api.postcode.software/CSV_PAF.csv";
-        String pafFile = "/Users/andymccall/Downloads/csv_paf/CSV_PAF.csv";
+        Query query = new Query(Criteria.where("internalPostcode").is(postcode));
 
-        List<AddressRecord> addressList = new ArrayList<>();
-
-        CSVReader reader = null;
-        try {
-            reader = new CSVReader(new FileReader(pafFile));
-            String[] line;
-            while ((line = reader.readNext()) != null) {
-                if (line[0].replaceAll("\\s+","").toLowerCase().equals(postcode.toLowerCase())) {
-                    AddressRecord addressRecord = new AddressRecord();
-                    addressList.add(addressRecord.populateAddressRecord(line));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        List<AddressRecord> addressList = mongoOperations.find(query, AddressRecord.class, ADDRESS_RECORD_COLLECTION);
 
         return addressList;
     }
 
+    /**
+     * Gets a list of AddressRecords for a given postcode and building number.
+     * @param postcode containing postcode to search for
+     * @param buildingNumber to filter on
+     */
     @Override
     public List<AddressRecord> getAddressRecords(String postcode, String buildingNumber){
 
-        //String pafFile = "/opt/api.postcode.software/CSV_PAF.csv";
-        String pafFile = "/Users/andymccall/Downloads/csv_paf/CSV_PAF.csv";
+        Query query = new Query(Criteria.where("internalPostcode").is(postcode).and("buildingNumber").is(buildingNumber));
 
-        List<AddressRecord> addressList = new ArrayList<>();
-
-        CSVReader reader = null;
-        try {
-            reader = new CSVReader(new FileReader(pafFile));
-            String[] line;
-            while ((line = reader.readNext()) != null) {
-                if (line[0].replaceAll("\\s+","").toLowerCase().equals(postcode.toLowerCase())) {
-                    if (line[6].toLowerCase().equals(buildingNumber.toLowerCase())) {
-                        AddressRecord addressRecord = new AddressRecord();
-                        addressList.add(addressRecord.populateAddressRecord(line));
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        List<AddressRecord> addressList = mongoOperations.find(query, AddressRecord.class, ADDRESS_RECORD_COLLECTION);
 
         return addressList;
     }
 
+    /**
+     * Gets a list of AddressRecords for a given UDPRN.
+     * @param UDPRN containing UDPRN to search for
+     */
     @Override
     public List<AddressRecord> getAddressRecordsByUDPRN(String UDPRN){
 
-        //String pafFile = "/opt/api.postcode.software/CSV_PAF.csv";
-        String pafFile = "/Users/andymccall/Downloads/csv_paf/CSV_PAF.csv";
+        Query query = new Query(Criteria.where("_id").is(UDPRN));
+        AddressRecord addressRecord = mongoOperations.findOne(query, AddressRecord.class, ADDRESS_RECORD_COLLECTION);
 
         List<AddressRecord> addressList = new ArrayList<>();
-
-        CSVReader reader = null;
-        try {
-            reader = new CSVReader(new FileReader(pafFile));
-            String[] line;
-            while ((line = reader.readNext()) != null) {
-                if (line[12].replaceAll("\\s+","").toLowerCase().equals(UDPRN.toLowerCase())) {
-                        AddressRecord addressRecord = new AddressRecord();
-                        addressList.add(addressRecord.populateAddressRecord(line));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        addressList.add(addressRecord);
 
         return addressList;
     }

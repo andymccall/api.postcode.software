@@ -10,6 +10,15 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import software.postcode.api.Application;
 
+/**
+ * The MongoConfiguration class is a class that implements the
+ * AbstractMongoConfiguration and sets up all the configuration
+ * needed to connect to the mongodb.
+ *
+ * @author  Andy McCall
+ * @version 0.1
+ * @since   2017-01-29
+ */
 @Configuration
 @PropertySource("classpath:application.properties")
 @EnableMongoRepositories
@@ -35,8 +44,4 @@ public class MongoConfiguration extends AbstractMongoConfiguration {
         return new MongoClient( mongodb_host, mongodb_port );
     }
 
-    @Override
-    protected String getMappingBasePackage() {
-        return "software.postcode.api.pafdatabase";
-    }
 }
