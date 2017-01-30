@@ -2,6 +2,7 @@ package software.postcode.api.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -34,8 +35,9 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
      * @param mongoOperations containing the MongoOperations
      *                        variable.
      */
+    @Autowired
     public AddressRecordDAOImpl(MongoOperations mongoOperations){
-        
+
         this.mongoOperations=mongoOperations;
     }
 
