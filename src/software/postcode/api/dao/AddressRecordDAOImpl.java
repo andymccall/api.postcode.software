@@ -85,6 +85,5 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
 
         return addressList;
     }
-
-
+    
 }
