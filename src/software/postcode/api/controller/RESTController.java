@@ -85,6 +85,22 @@ public class RESTController {
 
     }
 
+    /***
+     * Gets the AddressRecordJsonResponse for a list of postcodes.
+     * @param
+     * @return AddressRecordJsonResponse
+     */
+    @RequestMapping(value = "/postcode/", method = RequestMethod.POST)
+    public @ResponseBody
+    AddressRecordJsonResponse getBulkPostcode() {
+        logger.debug("Entering getBulkPostcode()");
+
+        AddressRecordJsonResponse<AddressRecord> addressRecordJsonResponse = new AddressRecordJsonResponse<>();
+
+        logger.debug("Exiting getBulkPostcode()");
+        return addressRecordJsonResponse;
+    }
+
     /**
      * Gets the AddressRecordJsonResponse for a building by postcode filtered by
      * building number.

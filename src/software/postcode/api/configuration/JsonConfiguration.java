@@ -12,9 +12,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import java.util.List;
 
 /**
- * Created by andymccall on 22/01/2017.
+ * The JsonConfiguration class is a class that implements the
+ * WebMvcConfigurerAdapter and sets up all the configuration
+ * needed such as the Jackson Json object mapper.
+ *
+ * @author  Andy McCall
+ * @version 0.1
+ * @since   2017-01-29
  */
-
 @Configuration
 @EnableWebMvc
 public class JsonConfiguration extends WebMvcConfigurerAdapter {

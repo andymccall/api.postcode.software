@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The MongoConfiguration class is a class that implements the
+ * The AddressRecordDAOImpl class is a class that implements the
  * AddressRecordDAO to store and retrieve data from the
  * mongodb.
  *
@@ -85,5 +85,5 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
 
         return addressList;
     }
-    
+
 }
