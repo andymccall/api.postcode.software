@@ -17,5 +17,7 @@ public interface AddressRecordService {
     public List<AddressRecord> getAddressRecords(String postcode);
     public List<AddressRecord> getAddressRecords(String postcode, String buildingNumber);
     public List<AddressRecord> getAddressRecordsByUDPRN(String UDPRN);
+    public List<AddressRecord> getRandomAddressRecords(int number);
+
 
 }

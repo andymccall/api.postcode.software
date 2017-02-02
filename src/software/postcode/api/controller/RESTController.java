@@ -151,6 +151,61 @@ public class RESTController {
 
     }
 
+    /**
+     * Gets the AddressRecordJsonResponse for a building by postcode.
+     * @return AddressRecordJsonResponse.   (@RequestParam(value = "i", required=false) Integer i)
+     */
+    @RequestMapping(value = "/random/{number}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
+    public @ResponseBody
+    AddressRecordJsonResponse getRandomPostcode(@PathVariable String number) {
+        logger.debug("Entering getRandomPostcode()");
+
+        int quantityOfPostcodes=0;
+
+        quantityOfPostcodes = Integer.parseInt(number);
+
+        if (quantityOfPostcodes == 0) {
+            quantityOfPostcodes++;
+        }
+
+        AddressRecordJsonResponse<AddressRecord> addressRecordJsonResponse = new AddressRecordJsonResponse<>();
+
+        addressRecordJsonResponse.setResult(addressRecordService.getRandomAddressRecords(quantityOfPostcodes));
+        if (addressRecordJsonResponse.getResult().isEmpty()) {
+            addressRecordJsonResponse.setStatus(404);
+        } else {
+            addressRecordJsonResponse.setStatus(200);
+        }
+
+        logger.debug("Exiting getRandomPostcode()");
+        return addressRecordJsonResponse;
+
+    }
+
+    /**
+     * Gets the AddressRecordJsonResponse for a building by postcode.
+     * @return AddressRecordJsonResponse.   (@RequestParam(value = "i", required=false) Integer i)
+     */
+    @RequestMapping(value = "/random", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
+    public @ResponseBody
+    AddressRecordJsonResponse getRandomPostcode() {
+        logger.debug("Entering getRandomPostcode()");
+
+        AddressRecordJsonResponse<AddressRecord> addressRecordJsonResponse = new AddressRecordJsonResponse<>();
+
+        addressRecordJsonResponse.setResult(addressRecordService.getRandomAddressRecords(1));
+        if (addressRecordJsonResponse.getResult().isEmpty()) {
+            addressRecordJsonResponse.setStatus(404);
+        } else {
+            addressRecordJsonResponse.setStatus(200);
+        }
+
+        logger.debug("Exiting getRandomPostcode()");
+        return addressRecordJsonResponse;
+
+    }
+
+
 }
 
 

@@ -69,4 +69,18 @@ public class AddressRecordServiceImpl implements AddressRecordService {
 
     }
 
+    /**
+     * Gets random AddressRecords.
+     * @param number number of records to return.
+     * @return List<AddressRecord> List containing random AddressRecord objects.
+     */
+    @Override
+    public List<AddressRecord> getRandomAddressRecords(int number) {
+
+        List<AddressRecord> addressRecords = addressRecordDAO.getRandomAddressRecords(number);
+
+        return addressRecords;
+
+    }
+
 }

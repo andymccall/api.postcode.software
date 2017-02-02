@@ -1,5 +1,6 @@
 package software.postcode.api.dao;
 
+import com.opencsv.CSVReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import software.postcode.api.model.AddressRecord;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * The AddressRecordDAOImpl class is a class that implements the
@@ -53,6 +57,7 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
         List<AddressRecord> addressList = mongoOperations.find(query, AddressRecord.class, ADDRESS_RECORD_COLLECTION);
 
         return addressList;
+
     }
 
     /**
@@ -85,5 +90,30 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
 
         return addressList;
     }
+
+    @Override
+    public List<AddressRecord> getRandomAddressRecords(int number){
+
+        Query query = new Query();
+        long count = mongoOperations.count(query, AddressRecord.class, ADDRESS_RECORD_COLLECTION);
+
+        List<AddressRecord> addressList = new ArrayList<>();
+
+        Random random = new Random();
+
+        for (int i=0; i<number; i++) {
+
+            long randomNumber = count + ((long) (random.nextDouble() * (0 - count)));
+
+            query = new Query(Criteria.where("internalSequence").is(randomNumber));
+            AddressRecord addressRecord = mongoOperations.findOne(query, AddressRecord.class, ADDRESS_RECORD_COLLECTION);
+
+            addressList.add(addressRecord);
+        }
+
+        return addressList;
+
+    }
+
 
 }

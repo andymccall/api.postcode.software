@@ -1,11 +1,15 @@
-# api.postcode.software
+# Postcode.software
 
-### Status
-[![Build Status](https://travis-ci.org/andymccall/api.postcode.software.svg?branch=mongodb-integration)](https://travis-ci.org/andymccall/api.postcode.software)
+Query for UK postcodes over HTTP and HTTPS. Postcode.software uses the Post Office sample PAF file.
 
-[![Coverage Status](https://coveralls.io/repos/github/andymccall/api.postcode.software/badge.svg?branch=mongodb-integration)](https://coveralls.io/github/andymccall/api.postcode.software?branch=mongodb-integration)
+Documentation for the API can be found at [(Swagger)(https://app.swaggerhub.com/api/andymccall/api.postcode.software/1.0.0)].
 
-A demo of this serice can be found at:
+### Build Status and Test Coverage
+[![Build Status](https://travis-ci.org/andymccall/api.postcode.software.svg?branch=master)](https://travis-ci.org/andymccall/api.postcode.software)
+[![Coverage Status](https://coveralls.io/repos/github/andymccall/api.postcode.software/badge.svg?branch=master)](https://coveralls.io/github/andymccall/api.postcode.software?branch=master)
+
+
+A demo of this service can be found at:
 
   http://api.postcode.software/
 & https://api.postcode.software/
@@ -15,6 +19,8 @@ A demo of this serice can be found at:
     * ping
     * postcode/<postcode>
     * postcode/<postcode>/<building_no>
+    * random
+    * random/<number of random records to return>
     * udprn/<udprn>
  
  The service uses the sample PAF file from the Post Office which has Plymouth addresses in it.

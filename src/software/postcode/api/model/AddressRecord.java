@@ -12,6 +12,7 @@ import org.springframework.data.annotation.Id;
  */
 public class AddressRecord {
 
+    private long internalSequence;
     private String internalPostcode;
     private String postcode;
     private String postTown;
@@ -30,6 +31,8 @@ public class AddressRecord {
     private char postcodeType;
     private char SUOrganisationIndicator;
     private String deliveryPointSuffix;
+
+    public void setInternalSequence(long internalSequence) { this.internalSequence = internalSequence; }
 
     public void setInternalPostcode(String internalPostcode) { this.internalPostcode = internalPostcode; }
 
