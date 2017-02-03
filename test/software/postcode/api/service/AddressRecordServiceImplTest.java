@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import software.postcode.api.dao.AddressRecordDAO;
 import software.postcode.api.model.AddressRecord;
+import software.postcode.api.model.ValidateRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,34 @@ public class AddressRecordServiceImplTest {
         test2AddressList.add(test2AddressRecord);
 
         when(mockAdddressRecordDAO.getAddressRecords(test2PostcodeRequest,test2BuildingNumberRequest)).thenReturn(test2AddressList);
+
+        // Set up the response for test2
+        String[] test3AddressArray = test2Address.split(Pattern.quote(","));
+        AddressRecord test3AddressRecord = new AddressRecord().populateAddressRecord(test3AddressArray);
+        List<AddressRecord> test3AddressList = new ArrayList<>();
+        test3AddressList.add(test1AddressRecord);
+        test3AddressList.add(test2AddressRecord);
+
+        when(mockAdddressRecordDAO.getRandomAddressRecords(1)).thenReturn(test1AddressList);
+        when(mockAdddressRecordDAO.getRandomAddressRecords(2)).thenReturn(test3AddressList);
+
+        // Set up the response for validate test
+        ValidateRecord test1ValidateRecord = new ValidateRecord();
+        test1ValidateRecord.setPostcode(test1PostcodeRequest);
+        test1ValidateRecord.setValid(true);
+        List<ValidateRecord> test1ValidateList = new ArrayList<>();
+        test1ValidateList.add(test1ValidateRecord);
+
+        // Set up the response for false validate test
+        ValidateRecord test3ValidateRecord = new ValidateRecord();
+        test3ValidateRecord.setPostcode(test3PostcodeRequest);
+        test3ValidateRecord.setValid(false);
+        List<ValidateRecord> test3ValidateList = new ArrayList<>();
+        test3ValidateList.add(test3ValidateRecord);
+
+        when(mockAdddressRecordDAO.validateAddressRecords(test1PostcodeRequest)).thenReturn(test1ValidateList);
+        when(mockAdddressRecordDAO.validateAddressRecords(test3PostcodeRequest)).thenReturn(test3ValidateList);
+
 
     }
 
@@ -141,6 +170,56 @@ public class AddressRecordServiceImplTest {
 
         Assert.assertEquals("getAddressRecords() has failed",
                 resultsList.size(),0);
+
+    }
+
+    /**
+     * Tests AddressRecordServiceImpl.getRandomAddressRecords() requesting 1 postcode
+     */
+    @Test
+    public void AddressRecordServiceImpl_GetOneRandomAddressRecords_Passes() throws Exception {
+        List<AddressRecord> resultsList = addressRecordServiceImpl.getRandomAddressRecords(1);
+
+        Assert.assertEquals("getAddressRecords() has failed",
+                resultsList.size(), 1);
+
+    }
+
+    /**
+     * Tests AddressRecordServiceImpl.getRandomAddressRecords() requesting 3 postcode2
+     */
+    @Test
+    public void AddressRecordServiceImpl_GetTwoRandomAddressRecords_Passes() throws Exception {
+        List<AddressRecord> resultsList = addressRecordServiceImpl.getRandomAddressRecords(2);
+
+        Assert.assertEquals("getRandomAddressRecords() has failed",
+                resultsList.size(), 2);
+
+    }
+
+    /**
+     * Tests AddressRecordServiceImpl.validateAddressRecords() with a true postcode
+     */
+    @Test
+    public void AddressRecordServiceImpl_ValidateTrueAddressRecords_Passes() throws Exception {
+
+        List<ValidateRecord> resultsList = addressRecordServiceImpl.validateAddressRecords(test1PostcodeRequest);
+
+        Assert.assertEquals("validateAddressRecords() has failed",
+                resultsList.get(0).getValid(),true);
+
+    }
+
+    /**
+     * Tests AddressRecordServiceImpl.validateAddressRecords() with a false postcode
+     */
+    @Test
+    public void AddressRecordServiceImpl_ValidateFalseAddressRecords_Passes() throws Exception {
+
+        List<ValidateRecord> resultsList = addressRecordServiceImpl.validateAddressRecords(test3PostcodeRequest);
+
+        Assert.assertEquals("validateAddressRecords() has failed",
+                resultsList.get(0).getValid(),false);
 
     }
 
