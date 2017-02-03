@@ -1,6 +1,7 @@
 package software.postcode.api.dao;
 
 import software.postcode.api.model.AddressRecord;
+import software.postcode.api.model.ValidateRecord;
 
 import java.util.List;
 
@@ -18,5 +19,6 @@ public interface AddressRecordDAO {
     public List<AddressRecord> getAddressRecords(String postcode, String buildingNumber);
     public List<AddressRecord> getAddressRecordsByUDPRN(String UDPRN);
     public List<AddressRecord> getRandomAddressRecords(int number);
+    public List<ValidateRecord> validateAddressRecords(String postcode);
 
 }

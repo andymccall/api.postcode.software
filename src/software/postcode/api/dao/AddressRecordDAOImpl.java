@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import software.postcode.api.model.AddressRecord;
+import software.postcode.api.model.ValidateRecord;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -112,6 +113,35 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
         }
 
         return addressList;
+
+    }
+
+    /**
+     * Gets a list of AddressRecords for a given postcode.
+     * @param postcode containing postcode to search for
+     */
+    @Override
+    public List<ValidateRecord> validateAddressRecords(String postcode){
+
+        ValidateRecord validateRecord = new ValidateRecord();
+
+        Query query = new Query(Criteria.where("internalPostcode").is(postcode));
+
+        List<AddressRecord> addressList = mongoOperations.find(query, AddressRecord.class, ADDRESS_RECORD_COLLECTION);
+
+        if (addressList.size() > 1) {
+            validateRecord.setPostcode(postcode);
+            validateRecord.setValid(true);
+        } else {
+            validateRecord.setPostcode(postcode);
+            validateRecord.setValid(false);
+        }
+
+        List<ValidateRecord> validateList = new ArrayList<>();
+
+        validateList.add(validateRecord);
+
+        return validateList;
 
     }
 

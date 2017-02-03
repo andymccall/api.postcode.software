@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by andymccall on 20/01/2017.
  */
-public class AddressRecordJsonResponse<T> extends JsonResponse {
+public class GenericJsonResponse<T> extends JsonResponse {
 
     private List<T> result;
 
@@ -19,7 +19,7 @@ public class AddressRecordJsonResponse<T> extends JsonResponse {
 
     @Override
     public String toString() {
-        return "AddressRecordJsonResponse{" +
+        return "GenericJsonResponse{" +
                 "status=" + super.getStatus() +
                 ", result=" + result +
                 ", error='" + super.getError() +

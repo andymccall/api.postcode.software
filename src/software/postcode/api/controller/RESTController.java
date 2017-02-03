@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import software.postcode.api.model.AddressRecord;
-import software.postcode.api.model.AddressRecordJsonResponse;
-import software.postcode.api.model.Ping;
-import software.postcode.api.model.PingJsonResponse;
+import software.postcode.api.model.*;
 import software.postcode.api.service.AddressRecordService;
 
 /**
@@ -68,37 +65,21 @@ public class RESTController {
      */
     @RequestMapping(value = "/postcode/{postcode}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
     public @ResponseBody
-    AddressRecordJsonResponse getPostcode(@PathVariable String postcode) {
+    GenericJsonResponse getPostcode(@PathVariable String postcode) {
         logger.debug("Entering getPostcode()");
 
-        AddressRecordJsonResponse<AddressRecord> addressRecordJsonResponse = new AddressRecordJsonResponse<>();
+        GenericJsonResponse<AddressRecord> genericJsonResponse = new GenericJsonResponse<>();
 
-        addressRecordJsonResponse.setResult(addressRecordService.getAddressRecords(postcode));
-        if (addressRecordJsonResponse.getResult().isEmpty()) {
-            addressRecordJsonResponse.setStatus(404);
+        genericJsonResponse.setResult(addressRecordService.getAddressRecords(postcode));
+        if (genericJsonResponse.getResult().isEmpty()) {
+            genericJsonResponse.setStatus(404);
         } else {
-            addressRecordJsonResponse.setStatus(200);
+            genericJsonResponse.setStatus(200);
         }
 
         logger.debug("Exiting getPostcode()");
-        return addressRecordJsonResponse;
+        return genericJsonResponse;
 
-    }
-
-    /***
-     * Gets the AddressRecordJsonResponse for a list of postcodes.
-     * @param
-     * @return AddressRecordJsonResponse
-     */
-    @RequestMapping(value = "/postcode/", method = RequestMethod.POST)
-    public @ResponseBody
-    AddressRecordJsonResponse getBulkPostcode() {
-        logger.debug("Entering getBulkPostcode()");
-
-        AddressRecordJsonResponse<AddressRecord> addressRecordJsonResponse = new AddressRecordJsonResponse<>();
-
-        logger.debug("Exiting getBulkPostcode()");
-        return addressRecordJsonResponse;
     }
 
     /**
@@ -110,20 +91,20 @@ public class RESTController {
      */
     @RequestMapping(value = "/postcode/{postcode}/{buildingNumber}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
     public @ResponseBody
-    AddressRecordJsonResponse getPostcode(@PathVariable String postcode, @PathVariable String buildingNumber) {
+    GenericJsonResponse getPostcode(@PathVariable String postcode, @PathVariable String buildingNumber) {
         logger.debug("Entering getPostcode()");
 
-        AddressRecordJsonResponse<AddressRecord> addressRecordJsonResponse = new AddressRecordJsonResponse<>();
+        GenericJsonResponse<AddressRecord> genericJsonResponse = new GenericJsonResponse<>();
 
-        addressRecordJsonResponse.setResult(addressRecordService.getAddressRecords(postcode,buildingNumber));
-        if (addressRecordJsonResponse.getResult().isEmpty()) {
-            addressRecordJsonResponse.setStatus(404);
+        genericJsonResponse.setResult(addressRecordService.getAddressRecords(postcode,buildingNumber));
+        if (genericJsonResponse.getResult().isEmpty()) {
+            genericJsonResponse.setStatus(404);
         } else {
-            addressRecordJsonResponse.setStatus(200);
+            genericJsonResponse.setStatus(200);
         }
 
         logger.debug("Exiting getPostcode()");
-        return addressRecordJsonResponse;
+        return genericJsonResponse;
 
     }
 
@@ -134,30 +115,31 @@ public class RESTController {
      */
     @RequestMapping(value = "/udprn/{UDPRN}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
     public @ResponseBody
-    AddressRecordJsonResponse getPostcodeByUDPRN(@PathVariable String UDPRN) {
+    GenericJsonResponse getPostcodeByUDPRN(@PathVariable String UDPRN) {
         logger.debug("Entering getPostcodeByUDPRN()");
 
-        AddressRecordJsonResponse<AddressRecord> addressRecordJsonResponse = new AddressRecordJsonResponse<>();
+        GenericJsonResponse<AddressRecord> genericJsonResponse = new GenericJsonResponse<>();
 
-        addressRecordJsonResponse.setResult(addressRecordService.getAddressRecordsByUDPRN(UDPRN));
-        if (addressRecordJsonResponse.getResult().isEmpty()) {
-            addressRecordJsonResponse.setStatus(404);
+        genericJsonResponse.setResult(addressRecordService.getAddressRecordsByUDPRN(UDPRN));
+        if (genericJsonResponse.getResult().isEmpty()) {
+            genericJsonResponse.setStatus(404);
         } else {
-            addressRecordJsonResponse.setStatus(200);
+            genericJsonResponse.setStatus(200);
         }
 
         logger.debug("Exiting getPostcodeByUDPRN()");
-        return addressRecordJsonResponse;
+        return genericJsonResponse;
 
     }
 
     /**
-     * Gets the AddressRecordJsonResponse for a building by postcode.
-     * @return AddressRecordJsonResponse.   (@RequestParam(value = "i", required=false) Integer i)
+     * Gets the AddressRecordJsonResponse for a a number of random postcodes.
+     * @param number the number of random postcodes to return.
+     * @return AddressRecordJsonResponse.
      */
     @RequestMapping(value = "/random/{number}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
     public @ResponseBody
-    AddressRecordJsonResponse getRandomPostcode(@PathVariable String number) {
+    GenericJsonResponse getRandomPostcode(@PathVariable String number) {
         logger.debug("Entering getRandomPostcode()");
 
         int quantityOfPostcodes=0;
@@ -168,43 +150,66 @@ public class RESTController {
             quantityOfPostcodes++;
         }
 
-        AddressRecordJsonResponse<AddressRecord> addressRecordJsonResponse = new AddressRecordJsonResponse<>();
+        GenericJsonResponse<AddressRecord> genericJsonResponse = new GenericJsonResponse<>();
 
-        addressRecordJsonResponse.setResult(addressRecordService.getRandomAddressRecords(quantityOfPostcodes));
-        if (addressRecordJsonResponse.getResult().isEmpty()) {
-            addressRecordJsonResponse.setStatus(404);
+        genericJsonResponse.setResult(addressRecordService.getRandomAddressRecords(quantityOfPostcodes));
+        if (genericJsonResponse.getResult().isEmpty()) {
+            genericJsonResponse.setStatus(404);
         } else {
-            addressRecordJsonResponse.setStatus(200);
+            genericJsonResponse.setStatus(200);
         }
 
         logger.debug("Exiting getRandomPostcode()");
-        return addressRecordJsonResponse;
+        return genericJsonResponse;
 
     }
 
     /**
-     * Gets the AddressRecordJsonResponse for a building by postcode.
-     * @return AddressRecordJsonResponse.   (@RequestParam(value = "i", required=false) Integer i)
+     * Gets the AddressRecordJsonResponse for a random postcode.
+     * @return AddressRecordJsonResponse.
      */
     @RequestMapping(value = "/random", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
     public @ResponseBody
-    AddressRecordJsonResponse getRandomPostcode() {
+    GenericJsonResponse getRandomPostcode() {
         logger.debug("Entering getRandomPostcode()");
 
-        AddressRecordJsonResponse<AddressRecord> addressRecordJsonResponse = new AddressRecordJsonResponse<>();
+        GenericJsonResponse<AddressRecord> genericJsonResponse = new GenericJsonResponse<>();
 
-        addressRecordJsonResponse.setResult(addressRecordService.getRandomAddressRecords(1));
-        if (addressRecordJsonResponse.getResult().isEmpty()) {
-            addressRecordJsonResponse.setStatus(404);
+        genericJsonResponse.setResult(addressRecordService.getRandomAddressRecords(1));
+        if (genericJsonResponse.getResult().isEmpty()) {
+            genericJsonResponse.setStatus(404);
         } else {
-            addressRecordJsonResponse.setStatus(200);
+            genericJsonResponse.setStatus(200);
         }
 
         logger.debug("Exiting getRandomPostcode()");
-        return addressRecordJsonResponse;
+        return genericJsonResponse;
 
     }
 
+    /**
+     * Gets the GenericJsonResponse when valdiating a postcode.
+     * @param postcode containing postcode to query.
+     * @return AddressRecordJsonResponse.
+     */
+    @RequestMapping(value = "/validate/{postcode}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
+    public @ResponseBody
+    GenericJsonResponse validatePostcode(@PathVariable String postcode) {
+        logger.debug("Entering validatePostcode()");
+
+        GenericJsonResponse<ValidateRecord> genericJsonResponse = new GenericJsonResponse<>();
+
+        genericJsonResponse.setResult(addressRecordService.validateAddressRecords(postcode));
+        if (genericJsonResponse.getResult().isEmpty()) {
+            genericJsonResponse.setStatus(404);
+        } else {
+            genericJsonResponse.setStatus(200);
+        }
+
+        logger.debug("Exiting validatePostcode()");
+        return genericJsonResponse;
+
+    }
 
 }
 

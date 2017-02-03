@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import software.postcode.api.Application;
 import software.postcode.api.model.AddressRecord;
+import software.postcode.api.model.ValidateRecord;
 import software.postcode.api.service.AddressRecordService;
 
 import java.nio.charset.Charset;
@@ -107,8 +108,16 @@ public class RESTControllerTest {
         List<AddressRecord> test1AddressList = new ArrayList<>();
         test1AddressList.add(test1AddressRecord);
 
+        // Set up the response for validate test
+        ValidateRecord test1ValidateRecord = new ValidateRecord();
+        test1ValidateRecord.setPostcode(test1PostcodeRequest);
+        test1ValidateRecord.setValid(true);
+        List<ValidateRecord> test1ValidateList = new ArrayList<>();
+        test1ValidateList.add(test1ValidateRecord);
+
         when(mockAddressRecordService.getAddressRecords(test1PostcodeRequest)).thenReturn(test1AddressList);
         when(mockAddressRecordService.getAddressRecordsByUDPRN(test1UPDRNRequest)).thenReturn(test1AddressList);
+        when(mockAddressRecordService.validateAddressRecords(test1PostcodeRequest)).thenReturn(test1ValidateList);
 
         // Set up the response for test2
         String[] test2AddressArray = test2Address.split(Pattern.quote(","));
@@ -117,6 +126,15 @@ public class RESTControllerTest {
         test2AddressList.add(test2AddressRecord);
 
         when(mockAddressRecordService.getAddressRecords(test2PostcodeRequest,test2BuildingNumberRequest)).thenReturn(test2AddressList);
+
+        // Set up the response for false validate test
+        ValidateRecord test3ValidateRecord = new ValidateRecord();
+        test3ValidateRecord.setPostcode(test3PostcodeRequest);
+        test3ValidateRecord.setValid(false);
+        List<ValidateRecord> test3ValidateList = new ArrayList<>();
+        test3ValidateList.add(test3ValidateRecord);
+
+        when(mockAddressRecordService.validateAddressRecords(test3PostcodeRequest)).thenReturn(test3ValidateList);
 
         mockAddressRecordService = mock(AddressRecordService.class);
 
@@ -212,6 +230,34 @@ public class RESTControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.status", is(404)));
+    }
+
+    /**
+     * Tests RESTController.validatePostcode() with a real postcode
+     */
+    @Test
+    public void Postcode_RealPostcodeIsValidated_Passes() throws Exception {
+
+        mockMvc.perform(get("/validate/" + test1PostcodeRequest))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.status", is(200)))
+                .andExpect(jsonPath("$.result[0].valid", is(true)));
+
+    }
+
+    /**
+     * Tests RESTController.validatePostcode() with a false postcode
+     */
+    @Test
+    public void Postcode_FalsePostcodeIsValidated_Passes() throws Exception {
+
+        mockMvc.perform(get("/validate/" + test3PostcodeRequest))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.status", is(200)))
+                .andExpect(jsonPath("$.result[0].valid", is(false)));
+
     }
 
 }

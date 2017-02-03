@@ -14,13 +14,14 @@ A demo of this service can be found at:
   [http://api.postcode.software/](http://api.postcode.software/)
 & [https://api.postcode.software/](https://api.postcode.software/)
   
- Currently working APIs are:
+ Currently working API endpoints are:
  
     * ping
     * postcode/<postcode>
     * postcode/<postcode>/<building_no>
+    * validate/<postcode>
     * random
-    * random/<number of random records to return>
+    * random/<number_of_random_records_to_return>
     * udprn/<udprn>
  
  The service uses the sample PAF file from the Post Office which does not have all addresses in it, to test use /random or /random/<number> to return valid postcodes.

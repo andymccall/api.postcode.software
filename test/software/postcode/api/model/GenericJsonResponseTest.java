@@ -15,10 +15,10 @@ import java.util.List;
  * @version 0.1
  * @since   2017-01-25
  */
-public class AddressRecordJsonResponseTest {
+public class GenericJsonResponseTest {
 
     private AddressRecord test1AddressRecord;
-    private AddressRecordJsonResponse test1AddressRecordJsonResponse;
+    private GenericJsonResponse test1GerericJsonResponse;
 
     /**
      * Sets up objects needed for the tests.
@@ -29,7 +29,7 @@ public class AddressRecordJsonResponseTest {
         List<AddressRecord> testAddressList = new ArrayList<>();
 
         test1AddressRecord = new AddressRecord();
-        test1AddressRecordJsonResponse = new AddressRecordJsonResponse();
+        test1GerericJsonResponse = new GenericJsonResponse();
 
         test1AddressRecord.setPostcode("A");
         test1AddressRecord.setPostTown("A");
@@ -50,12 +50,12 @@ public class AddressRecordJsonResponseTest {
 
         testAddressList.add(test1AddressRecord);
 
-        test1AddressRecordJsonResponse.setResult(testAddressList);
+        test1GerericJsonResponse.setResult(testAddressList);
 
     }
 
     /**
-     * Tests AddressRecordJsonResponse.getResult() with a known value
+     * Tests GenericJsonResponse.getResult() with a known value
      */
     @Test
     public void getResult() throws Exception {
@@ -63,7 +63,7 @@ public class AddressRecordJsonResponseTest {
     }
 
     /**
-     * Tests AddressRecordJsonResponse.setResult() with a known value
+     * Tests GenericJsonResponse.setResult() with a known value
      */
     @Test
     public void setResult() throws Exception {
@@ -71,13 +71,13 @@ public class AddressRecordJsonResponseTest {
     }
 
     /**
-     * Tests AddressRecordJsonResponseTest.toString()
+     * Tests GenericJsonResponse.toString()
      */
     @Test
     public void toString_StringReturned_Passes() throws Exception {
         Assert.assertEquals( "toString() has failed",
-                "AddressRecordJsonResponse{status=0, result=[AddressRecord{postcode='A', postTown='A', dependantLocality='A', doubleDependentLocality='A', thoroughfareAndDescriptor='A', dependentThoroughfareAndDescriptor='A', buildingNumber=A, buildingName='A', subBuildingName='A', POBox='A', departmentName='A', organisationName='A', UDPRN=A, postcodeType=A, SUOrganisationIndicator=A, deliveryPointSuffix='A'}], error='null}",
-                test1AddressRecordJsonResponse.toString());
+                "GenericJsonResponse{status=0, result=[AddressRecord{postcode='A', postTown='A', dependantLocality='A', doubleDependentLocality='A', thoroughfareAndDescriptor='A', dependentThoroughfareAndDescriptor='A', buildingNumber=A, buildingName='A', subBuildingName='A', POBox='A', departmentName='A', organisationName='A', UDPRN=A, postcodeType=A, SUOrganisationIndicator=A, deliveryPointSuffix='A'}], error='null}",
+                test1GerericJsonResponse.toString());
 
     }
 

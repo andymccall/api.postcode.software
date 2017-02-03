@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.postcode.api.dao.AddressRecordDAO;
 import software.postcode.api.model.AddressRecord;
+import software.postcode.api.model.ValidateRecord;
 
 import java.util.List;
 
@@ -70,9 +71,9 @@ public class AddressRecordServiceImpl implements AddressRecordService {
     }
 
     /**
-     * Gets random AddressRecords.
-     * @param number number of records to return.
-     * @return List<AddressRecord> List containing random AddressRecord objects.
+     * Gets the AddressRecord for a building by UDPRN.
+     * @param number containing postcode to query.
+     * @return List<AddressRecord> List containing AddressRecord objects.
      */
     @Override
     public List<AddressRecord> getRandomAddressRecords(int number) {
@@ -80,6 +81,20 @@ public class AddressRecordServiceImpl implements AddressRecordService {
         List<AddressRecord> addressRecords = addressRecordDAO.getRandomAddressRecords(number);
 
         return addressRecords;
+
+    }
+
+    /**
+     * Validates a postcode.
+     * @param postcode containing postcode to query.
+     * @return List<ValidateRecord> List containing ValidateRecord objects.
+     */
+    @Override
+    public List<ValidateRecord> validateAddressRecords(String postcode) {
+
+        List<ValidateRecord> validateRecords = addressRecordDAO.validateAddressRecords(postcode);
+
+        return validateRecords;
 
     }
 
