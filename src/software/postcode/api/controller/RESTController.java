@@ -211,6 +211,30 @@ public class RESTController {
 
     }
 
+    /**
+     * Gets the GenericJsonResponse when valdiating a postcode.
+     * @param postcode containing postcode to query.
+     * @return AddressRecordJsonResponse.
+     */
+    @RequestMapping(value = "/validate/{postcode}/{buildingNumber}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
+    public @ResponseBody
+    GenericJsonResponse validatePostcode(@PathVariable String postcode, @PathVariable String buildingNumber) {
+        logger.debug("Entering validatePostcode()");
+
+        GenericJsonResponse<ValidateRecord> genericJsonResponse = new GenericJsonResponse<>();
+
+        genericJsonResponse.setResult(addressRecordService.validateAddressRecords(postcode,buildingNumber));
+        if (genericJsonResponse.getResult().isEmpty()) {
+            genericJsonResponse.setStatus(404);
+        } else {
+            genericJsonResponse.setStatus(200);
+        }
+
+        logger.debug("Exiting validatePostcode()");
+        return genericJsonResponse;
+
+    }
+
 }
 
 

@@ -20,6 +20,7 @@ A demo of this service can be found at:
     * postcode/<postcode>
     * postcode/<postcode>/<building_no>
     * validate/<postcode>
+    * validate/<postcode>/<building_no>
     * random
     * random/<number_of_random_records_to_return>
     * udprn/<udprn>

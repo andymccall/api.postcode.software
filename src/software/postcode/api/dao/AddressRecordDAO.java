@@ -20,5 +20,6 @@ public interface AddressRecordDAO {
     public List<AddressRecord> getAddressRecordsByUDPRN(String UDPRN);
     public List<AddressRecord> getRandomAddressRecords(int number);
     public List<ValidateRecord> validateAddressRecords(String postcode);
+    public List<ValidateRecord> validateAddressRecords(String postcode, String buildingNumber);
 
 }

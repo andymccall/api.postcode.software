@@ -65,6 +65,7 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
      * Gets a list of AddressRecords for a given postcode and building number.
      * @param postcode containing postcode to search for
      * @param buildingNumber to filter on
+     * @return List<AddressRecord> List containing AddressRecord objects.
      */
     @Override
     public List<AddressRecord> getAddressRecords(String postcode, String buildingNumber){
@@ -134,6 +135,39 @@ public class AddressRecordDAOImpl implements AddressRecordDAO {
             validateRecord.setValid(true);
         } else {
             validateRecord.setPostcode(postcode);
+            validateRecord.setValid(false);
+        }
+
+        List<ValidateRecord> validateList = new ArrayList<>();
+
+        validateList.add(validateRecord);
+
+        return validateList;
+
+    }
+
+    /**
+     * Gets a list of AddressRecords for a given postcode.
+     * @param postcode containing postcode to search for
+     * @param buildingNumber to filter on
+     * @return List<ValidateRecord> List containing ValidateRecord objects.
+     */
+    @Override
+    public List<ValidateRecord> validateAddressRecords(String postcode, String buildingNumber){
+
+        ValidateRecord validateRecord = new ValidateRecord();
+
+        Query query = new Query(Criteria.where("internalPostcode").is(postcode).and("buildingNumber").is(buildingNumber));
+
+        List<AddressRecord> addressList = mongoOperations.find(query, AddressRecord.class, ADDRESS_RECORD_COLLECTION);
+
+        if (addressList.size() > 0) {
+            validateRecord.setPostcode(postcode);
+            validateRecord.setBuildingNumber(buildingNumber);
+            validateRecord.setValid(true);
+        } else {
+            validateRecord.setPostcode(postcode);
+            validateRecord.setBuildingNumber(buildingNumber);
             validateRecord.setValid(false);
         }
 

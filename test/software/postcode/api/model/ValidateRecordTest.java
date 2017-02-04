@@ -65,7 +65,7 @@ public class ValidateRecordTest {
     @Test
     public void toString_StringReturned_Passes() throws Exception {
         Assert.assertEquals( "toString() has failed",
-                "ValidateRecord{postcode='PL1 1AB', valid=true}", reference1ValidateRecord.toString());
+                "ValidateRecord{postcode='PL1 1AB', buildingNumber='null', valid=true}", reference1ValidateRecord.toString());
     }
 
 }

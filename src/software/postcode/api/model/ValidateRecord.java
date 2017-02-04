@@ -7,6 +7,7 @@ public class ValidateRecord {
 
     private String internalPostcode;
     private String postcode;
+    private String buildingNumber;
     private Boolean valid;
 
     public void setInternalPostcode(String internalPostcode) {
@@ -14,7 +15,7 @@ public class ValidateRecord {
     }
 
     public String getPostcode() {
-        return postcode;
+        return this.postcode;
     }
 
     public void setPostcode(String postcode) {
@@ -23,6 +24,10 @@ public class ValidateRecord {
         this.setInternalPostcode(postcode.replaceAll("\\s+",""));
 
     }
+
+    public String getBuildingNumber() { return this.buildingNumber; }
+
+    public void setBuildingNumber(String buildingNumber) { this.buildingNumber = buildingNumber; }
 
     public Boolean getValid() {
         return valid;
@@ -36,6 +41,7 @@ public class ValidateRecord {
     public String toString() {
         return "ValidateRecord{" +
                 "postcode='" + postcode + '\'' +
+                ", buildingNumber='" + buildingNumber + '\'' +
                 ", valid=" + valid +
                 '}';
     }

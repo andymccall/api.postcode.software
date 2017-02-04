@@ -98,4 +98,19 @@ public class AddressRecordServiceImpl implements AddressRecordService {
 
     }
 
+    /**
+     * Validates a postcode and building number
+     * @param postcode containing postcode to query.
+     * @param buildingNumber containing the building number at the postcode to validate.
+     * @return List<ValidateRecord> List containing ValidateRecord objects.
+     */
+    @Override
+    public List<ValidateRecord> validateAddressRecords(String postcode, String buildingNumber) {
+
+        List<ValidateRecord> validateRecords = addressRecordDAO.validateAddressRecords(postcode, buildingNumber);
+
+        return validateRecords;
+
+    }
+
 }
