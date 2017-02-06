@@ -25,4 +25,4 @@ A demo of this service can be found at:
     * random/<number_of_random_records_to_return>
     * udprn/<udprn>
  
- The service uses the sample PAF file from the Post Office which does not have all addresses in it, to test use /random or /random/<number> to return valid postcodes.
+ The service uses the sample PAF file from the Post Office which does not have all addresses in it, to test use /random or /random/\<number_of_random_records_to_return\> to return valid postcodes.
