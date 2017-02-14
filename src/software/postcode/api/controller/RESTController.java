@@ -12,7 +12,7 @@ import software.postcode.api.service.AddressRecordService;
  * called from.
  *
  * @author  Andy McCall
- * @version 0.1
+ * @version 0.2
  * @since   2017-01-29
  */
 @RestController
@@ -50,9 +50,7 @@ public class RESTController {
         PingJsonResponse pingJsonResponse = new PingJsonResponse();
         pingJsonResponse.setResult(ping);
 
-        if (pingJsonResponse.getResult() != null) {
-            pingJsonResponse.setStatus(200);
-        }
+        pingJsonResponse.setStatus(200);
 
         logger.debug("Exiting getPing()");
         return (pingJsonResponse);
@@ -71,11 +69,8 @@ public class RESTController {
         GenericJsonResponse<AddressRecord> genericJsonResponse = new GenericJsonResponse<>();
 
         genericJsonResponse.setResult(addressRecordService.getAddressRecords(postcode));
-        if (genericJsonResponse.getResult().isEmpty()) {
-            genericJsonResponse.setStatus(404);
-        } else {
-            genericJsonResponse.setStatus(200);
-        }
+
+        genericJsonResponse.setStatus(200);
 
         logger.debug("Exiting getPostcode()");
         return genericJsonResponse;
@@ -97,11 +92,8 @@ public class RESTController {
         GenericJsonResponse<AddressRecord> genericJsonResponse = new GenericJsonResponse<>();
 
         genericJsonResponse.setResult(addressRecordService.getAddressRecords(postcode,buildingNumber));
-        if (genericJsonResponse.getResult().isEmpty()) {
-            genericJsonResponse.setStatus(404);
-        } else {
-            genericJsonResponse.setStatus(200);
-        }
+
+        genericJsonResponse.setStatus(200);
 
         logger.debug("Exiting getPostcode()");
         return genericJsonResponse;
@@ -121,11 +113,8 @@ public class RESTController {
         GenericJsonResponse<AddressRecord> genericJsonResponse = new GenericJsonResponse<>();
 
         genericJsonResponse.setResult(addressRecordService.getAddressRecordsByUDPRN(UDPRN));
-        if (genericJsonResponse.getResult().isEmpty()) {
-            genericJsonResponse.setStatus(404);
-        } else {
-            genericJsonResponse.setStatus(200);
-        }
+
+        genericJsonResponse.setStatus(200);
 
         logger.debug("Exiting getPostcodeByUDPRN()");
         return genericJsonResponse;
@@ -153,11 +142,8 @@ public class RESTController {
         GenericJsonResponse<AddressRecord> genericJsonResponse = new GenericJsonResponse<>();
 
         genericJsonResponse.setResult(addressRecordService.getRandomAddressRecords(quantityOfPostcodes));
-        if (genericJsonResponse.getResult().isEmpty()) {
-            genericJsonResponse.setStatus(404);
-        } else {
-            genericJsonResponse.setStatus(200);
-        }
+
+        genericJsonResponse.setStatus(200);
 
         logger.debug("Exiting getRandomPostcode()");
         return genericJsonResponse;
@@ -176,11 +162,8 @@ public class RESTController {
         GenericJsonResponse<AddressRecord> genericJsonResponse = new GenericJsonResponse<>();
 
         genericJsonResponse.setResult(addressRecordService.getRandomAddressRecords(1));
-        if (genericJsonResponse.getResult().isEmpty()) {
-            genericJsonResponse.setStatus(404);
-        } else {
-            genericJsonResponse.setStatus(200);
-        }
+
+        genericJsonResponse.setStatus(200);
 
         logger.debug("Exiting getRandomPostcode()");
         return genericJsonResponse;
@@ -200,11 +183,8 @@ public class RESTController {
         GenericJsonResponse<ValidateRecord> genericJsonResponse = new GenericJsonResponse<>();
 
         genericJsonResponse.setResult(addressRecordService.validateAddressRecords(postcode));
-        if (genericJsonResponse.getResult().isEmpty()) {
-            genericJsonResponse.setStatus(404);
-        } else {
-            genericJsonResponse.setStatus(200);
-        }
+
+        genericJsonResponse.setStatus(200);
 
         logger.debug("Exiting validatePostcode()");
         return genericJsonResponse;
@@ -224,11 +204,8 @@ public class RESTController {
         GenericJsonResponse<ValidateRecord> genericJsonResponse = new GenericJsonResponse<>();
 
         genericJsonResponse.setResult(addressRecordService.validateAddressRecords(postcode,buildingNumber));
-        if (genericJsonResponse.getResult().isEmpty()) {
-            genericJsonResponse.setStatus(404);
-        } else {
-            genericJsonResponse.setStatus(200);
-        }
+
+        genericJsonResponse.setStatus(200);
 
         logger.debug("Exiting validatePostcode()");
         return genericJsonResponse;
