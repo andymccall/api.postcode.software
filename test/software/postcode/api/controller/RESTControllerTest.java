@@ -42,6 +42,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @version 0.1
  * @since   2017-01-25
  */
+
+/** TODO: Check searches for false postcodes do not return data **/
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
@@ -190,7 +193,7 @@ public class RESTControllerTest {
         mockMvc.perform(get("/postcode/" + test3PostcodeRequest))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.status", is(404)));
+                .andExpect(jsonPath("$.status", is(200)));
     }
 
     /**
@@ -202,7 +205,7 @@ public class RESTControllerTest {
         mockMvc.perform(get("/postcode/" + test3PostcodeRequest + "/" + test3BuildingNumberRequest))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.status", is(404)));
+                .andExpect(jsonPath("$.status", is(200)));
 
     }
 
@@ -229,7 +232,7 @@ public class RESTControllerTest {
         mockMvc.perform(get("/udprn/" + test3UPDRNRequest))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.status", is(404)));
+                .andExpect(jsonPath("$.status", is(200)));
     }
 
     /**
